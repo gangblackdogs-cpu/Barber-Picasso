@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picasso Barbershop</title>
+    <style>
+        :root {
+            --bg-color: #0f0f10;
+            --card-bg: #1a1a1c;
+            --metal-gradient: linear-gradient(135deg, #e6e6e6 0%, #8e8e93 50%, #48484a 100%);
+            --silver-btn: linear-gradient(180deg, #525257 0%, #2c2c2e 100%);
+            --silver-border: #8e8e93;
+            --text-main: #ffffff;
+            --text-sub: #a1a1a6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top, #2c2c2e 0%, #0f0f10 70%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .mobile-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(28, 28, 30, 0.95);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-frame {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: var(--metal-gradient);
+            padding: 3px;
+            margin-bottom: 12px;
+        }
+
+        .logo-inner {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #2c2c2e;
+        }
+
+        .logo-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            font-style: italic;
+            color: var(--text-sub);
+        }
+
+        .shop-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .address-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--silver-btn);
+            border: 1px solid var(--silver-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .section-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e5e5ea;
+            margin-bottom: 10px;
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .service-item {
+            background: rgba(44, 44, 46, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .service-item.selected {
+            background: rgba(142, 142, 147, 0.25);
+            border-color: var(--silver-border);
+        }
+
+        .service-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .service-info span {
+            font-size: 0.78rem;
+            color: var(--text-sub);
+        }
+
+        .service-price {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        input[type="date"], input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(44, 44, 46, 0.8);
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            outline: none;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .time-chip {
+            background: rgba(44, 44, 46, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            padding: 10px 0;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .time-chip.selected {
+            background: var(--metal-gradient);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--metal-gradient);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .error-msg {
+            color: #ff453a;
+            font-size: 0.8rem;
+            margin-top: -8px;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-card">
+    <div class="logo-frame">
+        <div class="logo-inner">
+            <div class="logo-title">SEAN</div>
+            <div class="logo-subtitle">Studio</div>
+        </div>
+    </div>
+
+    <div class="shop-name">Picasso Barbershop</div>
+    <div class="address-badge">גליקסון 41, נתניה</div>
+
+    <div class="social-buttons">
+        <a href="https://wa.me/972507126868" class="icon-btn" target="_blank">💬</a>
+        <a href="tel:0507126868" class="icon-btn">📞</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <form id="bookingForm">
+        <div class="section-label">בחר שירות</div>
+        <div class="services-list">
+            <div class="service-item" onclick="selectService(this, 'תספורת גבר', 30, 30)">
+                <div class="service-info">
+                    <h4>תספורת גבר</h4>
+                    <span>30 דקות</span>
+                </div>
+                <div class="service-price">₪30</div>
+            </div>
+
+            <div class="service-item" onclick="selectService(this, 'תספורת גבר + זקן', 35, 35)">
+                <div class="service-info">
+                    <h4>תספורת גבר + זקן</h4>
+                    <span>35 דקות</span>
+                </div>
+                <div class="service-price">₪35</div>
+            </div>
+
+            <div class="service-item" onclick="selectService(this, 'תספורת + זקן + מסכת שחורים', 45, 45)">
+                <div class="service-info">
+                    <h4>תספורת + זקן + מסכת שחורים</h4>
+                    <span>45 דקות</span>
+                </div>
+                <div class="service-price">₪45</div>
+            </div>
+        </div>
+
+        <div class="section-label">בחר תאריך ושעה</div>
+        <input type="date" id="appointmentDate" onchange="validateDay(this)" required>
+        <div id="dayError" class="error-msg">המספרה סגורה בימי שישי ושבת.</div>
+
+        <div class="time-grid">
+            <div class="time-chip" onclick="selectTime(this)">10:30</div>
+            <div class="time-chip" onclick="selectTime(this)">11:30</div>
+            <div class="time-chip" onclick="selectTime(this)">12:30</div>
+            <div class="time-chip" onclick="selectTime(this)">13:30</div>
+            <div class="time-chip" onclick="selectTime(this)">15:00</div>
+            <div class="time-chip" onclick="selectTime(this)">16:00</div>
+            <div class="time-chip" onclick="selectTime(this)">17:00</div>
+            <div class="time-chip" onclick="selectTime(this)">18:00</div>
+            <div class="time-chip" onclick="selectTime(this)">18:30</div>
+            <div class="time-chip" onclick="selectTime(this)">19:00</div>
+        </div>
+
+        <div class="section-label">הפרטים שלך</div>
+        <input type="text" id="clientName" placeholder="שם מלא" required>
+        <input type="tel" id="clientPhone" placeholder="מספר טלפון" required>
+
+        <button type="submit" class="submit-btn">אישור וקביעת תור</button>
+    </form>
+</div>
+
+<script>
+    let selectedService = '';
+    let selectedPrice = '';
+    let selectedDuration = '';
+    let selectedTimeSlot = '';
+
+    const dateInput = document.getElementById('appointmentDate');
+    dateInput.min = new Date().toISOString().split('T')[0];
+
+    function selectService(element, service, price, duration) {
+        document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedService = service;
+        selectedPrice = price;
+        selectedDuration = duration;
+    }
+
+    function selectTime(element) {
+        document.querySelectorAll('.time-chip').forEach(el => el.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedTimeSlot = element.innerText;
+    }
+
+    function validateDay(input) {
+        const selectedDate = new Date(input.value);
+        const day = selectedDate.getUTCDay();
+        const errorMsg = document.getElementById('dayError');
+        if (day === 5 || day === 6) {
+            errorMsg.style.display = 'block';
+            input.value = '';
+        } else {
+            errorMsg.style.display = 'none';
+        }
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const date = document.getElementById('appointmentDate').value;
+        const name = document.getElementById('clientName').value;
+        const phone = document.getElementById('clientPhone').value;
+
+        if (!selectedService || !selectedTimeSlot) {
+            alert('אנא בחר שירות ושעת תור');
+            return;
+        }
+
+        const barberPhone = "972507126868";
+        const message = `היי, אני רוצה לקבוע תור:%0A✂️ *שירות:* ${selectedService} (${selectedPrice} ₪ - ${selectedDuration} דק')%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם:* ${name}%0A📞 *טלפון:* ${phone}%0A📍 *סניף:* גליקסון 41, נתניה`;
+
+        window.open(`https://wa.me/${barberPhone}?text=${message}`, '_blank');
+    });
+</script>
+
+</body>
+</html>
