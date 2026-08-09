@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sean Studio</title>
+    <title>Sean Atlan Studio</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: #121212; color: #ffffff; display: flex; justify-content: center; padding: 15px; }
@@ -11,23 +11,22 @@
         .header { text-align: center; margin-bottom: 20px; }
         .bsd { font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: bold; }
         
-        /* עיצוב הלוגו */
+        /* עיצוב הלוגו החדש */
         .logo-container {
-            width: 140px;
-            height: 140px;
+            width: 100%;
+            max-width: 280px;
             margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #000000;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 20px 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            overflow: hidden;
         }
         .logo-svg {
             width: 100%;
-            height: 100%;
+            height: auto;
         }
 
         h1 { font-size: 22px; margin-bottom: 4px; }
@@ -61,15 +60,15 @@
     <div class="header">
         <div class="bsd">בס״ד</div>
         
+        <!-- הלוגו החדש לפי התמונה -->
         <div class="logo-container">
-            <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <rect width="200" height="200" fill="#000000" />
-                <text x="100" y="105" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="38" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="4">SEAN</text>
-                <text x="100" y="142" font-family="'Brush Script MT', 'Dancing Script', 'Caveat', cursive, sans-serif" font-size="34" font-style="italic" fill="#ffffff" text-anchor="middle">Studio</text>
+            <svg class="logo-svg" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+                <text x="200" y="65" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="300" fill="#ffffff" text-anchor="middle" letter-spacing="1">Sean Atlan Studio</text>
+                <line x1="60" y1="85" x2="340" y2="85" stroke="#ffffff" stroke-width="1.5" />
             </svg>
         </div>
 
-        <h1>Sean Studio</h1>
+        <h1>Sean Atlan Studio</h1>
         <div class="address">גליקסון 41, נתניה</div>
     </div>
 
@@ -107,7 +106,7 @@
         </div>
 
         <div class="section-title">בחר תאריך ושעה</div>
-        <input type="date" id="dateInput" required onchange="checkDay(this)">
+        <input type="date" id="dateInput" required onchange="onDateChange(this)">
         <div class="error-msg" id="errorMsg">המספרה סגורה בימי שישי ושבת. אנא בחר יום אחר.</div>
 
         <div class="time-slots" id="timeSlots">
@@ -160,30 +159,72 @@
         selectedTimeSlot = el.innerText;
     }
 
-    function checkDay(input) {
+    function onDateChange(input) {
         const date = new Date(input.value);
         const day = date.getDay();
         const errorMsg = document.getElementById('errorMsg');
+        
         if (day === 5 || day === 6) {
             errorMsg.style.display = 'block';
             input.value = '';
+            return;
         } else {
             errorMsg.style.display = 'none';
         }
+
+        // הסתרת שעות שכבר נתפסו בתאריך הזה
+        filterTakenTimes(input.value);
+    }
+
+    function filterTakenTimes(selectedDate) {
+        const bookedAppointments = JSON.parse(localStorage.getItem('bookedAppointments') || '[]');
+        
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            const time = btn.innerText;
+            const isTaken = bookedAppointments.some(app => app.date === selectedDate && app.time === time);
+            
+            if (isTaken) {
+                btn.style.display = 'none';
+            } else {
+                btn.style.display = 'block';
+            }
+        });
     }
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        if(!selectedTimeSlot) {
+
+        // בדיקה 1: מניעת קביעת יותר מתור אחד בשבוע
+        const lastBookingTime = localStorage.getItem('lastUserBookingTimestamp');
+        const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+        
+        if (lastBookingTime && (Date.now() - parseInt(lastBookingTime)) < ONE_WEEK_MS) {
+            alert('ניתן לקבוע תור אחד בלבד בשבוע. נסה שוב מאוחר יותר.');
+            return;
+        }
+
+        if (!selectedTimeSlot) {
             alert('אנא בחר שעה לתור');
             return;
         }
+
         const date = document.getElementById('dateInput').value;
         const name = document.getElementById('custName').value;
         const phone = document.getElementById('custPhone').value;
 
+        // שמירת התור בזיכרון המקומי (מרימת השעה מהרשימה)
+        const bookedAppointments = JSON.parse(localStorage.getItem('bookedAppointments') || '[]');
+        bookedAppointments.push({ date: date, time: selectedTimeSlot });
+        localStorage.setItem('bookedAppointments', JSON.stringify(bookedAppointments));
+        
+        // שמירת הזמן של ההזמנה לחסימת תור נוסף בשבוע
+        localStorage.setItem('lastUserBookingTimestamp', Date.now().toString());
+
         const barberPhone = "972507126868";
         const message = `היי, אני רוצה לקבוע תור:%0A✂️ *שירות:* ${selectedService} (${selectedPrice} ₪ - ${selectedDuration} דק')%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם:* ${name}%0A📞 *טלפון:* ${phone}%0A📍 *סניף:* גליקסון 41, נתניה`;
+
+        // עדכון המסך שהשעה נתפסה
+        filterTakenTimes(date);
 
         window.open(`https://wa.me/${barberPhone}?text=${message}`, '_blank');
     });
