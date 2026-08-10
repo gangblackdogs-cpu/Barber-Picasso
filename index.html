@@ -7,23 +7,23 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #121212; color: #ffffff; display: flex; justify-content: center; padding: 15px; padding-bottom: 80px; }
-        .container { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative; border: 1px solid #2a2a2a; }
+        body { background-color: #f8f9fa; color: #1a1a1a; display: flex; justify-content: center; padding: 15px; padding-bottom: 80px; }
+        .container { width: 100%; max-width: 450px; background: #ffffff; border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; border: 1px solid #e9ecef; }
         
         /* פעמון עדכונים */
-        .notification-bell { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid #444; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; z-index: 10; transition: 0.2s; backdrop-filter: blur(5px); }
-        .notification-bell:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
-        .bell-badge { position: absolute; top: 3px; right: 3px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; border: 2px solid #1e1e1e; }
+        .notification-bell { position: absolute; top: 20px; left: 20px; background: #f1f3f5; border: 1px solid #dee2e6; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; z-index: 10; transition: 0.2s; }
+        .notification-bell:hover { background: #e9ecef; transform: scale(1.05); }
+        .bell-badge { position: absolute; top: 3px; right: 3px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; border: 2px solid #ffffff; }
         
         /* חלון מודאל */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; backdrop-filter: blur(4px); }
-        .modal-content { background: #262626; border-radius: 16px; padding: 22px; width: 100%; max-width: 350px; border: 1px solid #444; text-align: center; }
-        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #fff; }
-        .modal-body { font-size: 14px; color: #ddd; line-height: 1.5; margin-bottom: 15px; }
-        .close-btn { background: #fff; color: #000; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-content { background: #ffffff; border-radius: 16px; padding: 22px; width: 100%; max-width: 350px; border: 1px solid #dee2e6; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #1a1a1a; }
+        .modal-body { font-size: 14px; color: #495057; line-height: 1.5; margin-bottom: 15px; }
+        .close-btn { background: #1a1a1a; color: #fff; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         .header { text-align: center; margin-bottom: 20px; }
-        .bsd { font-size: 13px; color: #888; margin-bottom: 8px; font-weight: bold; }
+        .bsd { font-size: 13px; color: #868e96; margin-bottom: 8px; font-weight: bold; }
         
         /* לוגו עגול */
         .logo-container {
@@ -33,40 +33,40 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #000000;
+            background-color: #1a1a1a;
             border-radius: 50%;
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+            border: 2px solid #d4af37;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
             padding: 10px;
         }
         .logo-svg { width: 100%; height: 100%; }
 
-        h1 { font-size: 25px; margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px; }
+        h1 { font-size: 25px; margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px; color: #1a1a1a; }
 
         /* סטטוס פתוח/סגור + Waze */
         .status-and-location { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
-        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .status-badge.open { background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); }
-        .status-badge.closed { background: rgba(255, 71, 87, 0.15); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.3); }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .status-badge.open { background: #e6fcf5; color: #0ca678; border: 1px solid #96f2d7; }
+        .status-badge.closed { background: #fff5f5; color: #f03e3e; border: 1px solid #ffc9c9; }
         
-        .waze-btn { display: inline-flex; align-items: center; gap: 5px; background: #2a2a2a; border: 1px solid #444; color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 12px; text-decoration: none; font-weight: 600; transition: 0.2s; }
-        .waze-btn:hover { background: #333; }
+        .waze-btn { display: inline-flex; align-items: center; gap: 6px; background: #f1f3f5; border: 1px solid #ced4da; color: #1a1a1a; padding: 6px 14px; border-radius: 20px; font-size: 12px; text-decoration: none; font-weight: 600; transition: 0.2s; }
+        .waze-btn:hover { background: #e9ecef; }
 
-        .welcome-box { background: linear-gradient(145deg, #262626, #1f1f1f); border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 1px solid #333; }
-        .welcome-title { font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 8px; text-align: center; }
-        .welcome-text { font-size: 13.5px; color: #ddd; line-height: 1.5; margin-bottom: 12px; text-align: center; }
-        .rules-list { border-top: 1px solid #333; padding-top: 10px; margin-top: 10px; }
-        .rule-item { font-size: 12px; color: #aaa; line-height: 1.4; margin-bottom: 4px; }
+        .welcome-box { background: #f8f9fa; border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 1px solid #e9ecef; }
+        .welcome-title { font-size: 17px; font-weight: bold; color: #1a1a1a; margin-bottom: 8px; text-align: center; }
+        .welcome-text { font-size: 13.5px; color: #495057; line-height: 1.5; margin-bottom: 12px; text-align: center; }
+        .rules-list { border-top: 1px solid #dee2e6; padding-top: 10px; margin-top: 10px; }
+        .rule-item { font-size: 12px; color: #6c757d; line-height: 1.4; margin-bottom: 4px; }
 
-        .section-title { font-size: 16px; font-weight: bold; margin: 22px 0 12px 0; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 16px; font-weight: bold; margin: 22px 0 12px 0; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
         
         .services { display: flex; flex-direction: column; gap: 10px; }
-        .service-card { background: #2a2a2a; border: 2px solid #333; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.25s ease; }
-        .service-card:hover { border-color: #666; }
-        .service-card.selected { border-color: #25D366; background: #26382b; }
-        .service-info h3 { font-size: 15px; margin-bottom: 3px; }
-        .service-info p { font-size: 12px; color: #aaa; }
-        .price { font-weight: bold; font-size: 17px; color: #25D366; }
+        .service-card { background: #ffffff; border: 2px solid #e9ecef; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.25s ease; }
+        .service-card:hover { border-color: #adb5bd; }
+        .service-card.selected { border-color: #1a1a1a; background: #f8f9fa; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .service-info h3 { font-size: 15px; margin-bottom: 3px; color: #1a1a1a; }
+        .service-info p { font-size: 12px; color: #6c757d; }
+        .price { font-weight: bold; font-size: 17px; color: #d4af37; }
 
         .step-hidden { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
         .step-visible { display: block; opacity: 1; animation: fadeIn 0.4s ease-in-out; }
@@ -76,41 +76,45 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        input[type="date"], input[type="text"], input[type="tel"], textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #2a2a2a; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .name-group { display: flex; gap: 10px; }
+        .name-group input { flex: 1; }
+
+        input[type="date"], input[type="text"], input[type="tel"], textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ced4da; background: #ffffff; color: #1a1a1a; font-size: 14px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus, textarea:focus { border-color: #1a1a1a; }
         textarea { resize: none; height: 70px; }
         
         .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 240px; overflow-y: auto; padding-right: 4px; margin-top: 10px; }
-        .time-btn { background: #2a2a2a; border: 1px solid #3d3d3d; color: #fff; padding: 12px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-        .time-btn:hover { background: #333; border-color: #666; }
-        .time-btn.selected { background: #ffffff; color: #000000; font-weight: bold; border-color: #ffffff; box-shadow: 0 0 10px rgba(255,255,255,0.3); transform: scale(1.02); }
+        .time-btn { background: #ffffff; border: 1px solid #ced4da; color: #1a1a1a; padding: 12px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .time-btn:hover { background: #f1f3f5; border-color: #adb5bd; }
+        .time-btn.selected { background: #1a1a1a; color: #ffffff; font-weight: bold; border-color: #1a1a1a; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transform: scale(1.02); }
         
-        .error-msg { color: #ff5555; font-size: 12px; display: none; margin-bottom: 10px; text-align: center; }
-        .submit-btn { width: 100%; background: #25D366; color: #fff; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); transition: 0.2s; }
+        .error-msg { color: #f03e3e; font-size: 12px; display: none; margin-bottom: 10px; text-align: center; }
+        .submit-btn { width: 100%; background: #25D366; color: #ffffff; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25); transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .submit-btn:hover { background: #20ba5a; transform: translateY(-2px); }
 
         /* הודעת אישור לקוח באתר */
-        .confirmation-box { display: none; background: #1b2e1e; border: 1px solid #25D366; border-radius: 14px; padding: 20px; text-align: center; margin-top: 20px; animation: fadeIn 0.4s ease; }
-        .confirmation-box h3 { color: #25D366; font-size: 18px; margin-bottom: 8px; }
-        .confirmation-box p { color: #ddd; font-size: 14px; line-height: 1.4; }
+        .confirmation-box { display: none; background: #e6fcf5; border: 1px solid #25D366; border-radius: 14px; padding: 20px; text-align: center; margin-top: 20px; animation: fadeIn 0.4s ease; }
+        .confirmation-box h3 { color: #0ca678; font-size: 18px; margin-bottom: 8px; }
+        .confirmation-box p { color: #2b8a3e; font-size: 14px; line-height: 1.4; }
 
         /* גלריית תמונות */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .gallery-item { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #333; background: #2a2a2a; }
+        .gallery-item { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #e9ecef; background: #f8f9fa; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
         /* אזור ביקורות */
         .reviews-container { margin-top: 15px; }
-        .review-card { background: #262626; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #333; }
+        .review-card { background: #f8f9fa; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #e9ecef; }
         .review-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
-        .review-name { font-weight: bold; color: #fff; }
+        .review-name { font-weight: bold; color: #1a1a1a; }
         .review-stars { color: #f1c40f; }
-        .review-text { font-size: 12.5px; color: #ccc; }
+        .review-text { font-size: 12.5px; color: #495057; }
         
-        .add-review-box { background: #222; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #333; }
-        .admin-btn { font-size: 11px; color: #555; text-align: center; margin-top: 25px; cursor: pointer; }
+        .add-review-box { background: #f8f9fa; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #e9ecef; }
+        .admin-btn { font-size: 11px; color: #868e96; text-align: center; margin-top: 25px; cursor: pointer; }
 
         /* כפתור וואטסאפ צף */
-        .floating-whatsapp { position: fixed; bottom: 20px; left: 20px; background: #25D366; color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); text-decoration: none; z-index: 90; transition: transform 0.2s; }
+        .floating-whatsapp { position: fixed; bottom: 20px; left: 20px; background: #25D366; color: #ffffff; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35); text-decoration: none; z-index: 90; transition: transform 0.2s; }
         .floating-whatsapp:hover { transform: scale(1.1); }
     </style>
 </head>
@@ -149,7 +153,10 @@
         <!-- סטטוס פתוח/סגור בלייב + כפתור ניווט Waze -->
         <div class="status-and-location">
             <div id="liveStatus" class="status-badge open">● בודק סטטוס...</div>
-            <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="waze-btn">🚗 נווט ב-Waze</a>
+            <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="waze-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                נווט ב-Waze
+            </a>
         </div>
     </div>
 
@@ -216,14 +223,19 @@
         <!-- שלב 3: פרטים אישיים -->
         <div id="step3" class="step-hidden">
             <div class="section-title">3️⃣ פרטים אישיים</div>
-            <input type="text" id="custName" placeholder="שם מלא" required>
+            <div class="name-group">
+                <input type="text" id="custFirstName" placeholder="שם פרטי" required>
+                <input type="text" id="custLastName" placeholder="שם משפחה" required>
+            </div>
             <input type="tel" id="custPhone" placeholder="מספר טלפון לקבלת SMS" required>
 
-            <button type="submit" class="submit-btn">שלח בקשה לקביעת תור ✂️</button>
+            <button type="submit" class="submit-btn">
+                <span>שלח בקשה לקביעת תור</span> ✂️
+            </button>
         </div>
     </form>
 
-    <!-- הודעת אישור ללקוח -->
+    <!-- הודעת אישור לקוח באתר -->
     <div id="confirmationBox" class="confirmation-box">
         <h3>בקשת התור נשלחה בהצלחה! 🎉</h3>
         <p>הבקשה הועברה לספר לאישור.<br>מיד תשלח אליך הודעת SMS לאישור סופי של התור. תודה!</p>
@@ -239,10 +251,10 @@
 
     <!-- טופס הוספת ביקורת -->
     <div class="add-review-box">
-        <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #fff;">השאר ביקורת:</div>
+        <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #1a1a1a;">השאר ביקורת:</div>
         <input type="text" id="reviewerName" placeholder="השם שלך" style="padding: 8px; font-size: 12px;">
         <textarea id="reviewerText" placeholder="איך הייתה התספורת והחוויה?" style="padding: 8px; font-size: 12px;"></textarea>
-        <button onclick="addReview()" style="width:100%; background:#fff; color:#000; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">שלח ביקורת ⭐</button>
+        <button onclick="addReview()" style="width:100%; background:#1a1a1a; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">שלח ביקורת ⭐</button>
     </div>
 
     <div class="admin-btn" onclick="adminUploadImage()">🔒 מנהל? לחץ להעלאת תמונה לגלריה</div>
@@ -250,7 +262,11 @@
 </div>
 
 <!-- כפתור וואטסאפ צף -->
-<a href="https://wa.me/972507126868?text=היי,%20יש%20לי%20שאלה%20לגבי%20תור" target="_blank" class="floating-whatsapp" title="דבר איתנו בוואטסאפ">💬</a>
+<a href="https://wa.me/972507126868?text=היי,%20יש%20לי%20שאלה%20לגבי%20תור" target="_blank" class="floating-whatsapp" title="דבר איתנו בוואטסאפ">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.012 2c-5.508 0-9.989 4.481-9.989 9.989 0 1.764.459 3.487 1.332 5.006l-1.417 5.176 5.297-1.389c1.464.8 3.125 1.22 4.777 1.22h.004c5.508 0 9.99-4.482 9.99-9.99-.001-5.508-4.483-9.989-9.994-9.989zm5.82 14.123c-.244.688-1.427 1.317-1.984 1.396-.525.074-1.206.105-1.939-.129-.444-.141-1.02-.33-1.758-.65-3.093-1.341-5.111-4.474-5.267-4.68-.155-.208-1.267-1.688-1.267-3.222 0-1.534.802-2.288 1.083-2.583.281-.295.612-.369.816-.369.204 0 .408.002.586.01.19.008.445-.072.695.529.257.616.877 2.14.954 2.296.077.155.129.338.026.545-.102.207-.154.338-.307.518-.153.18-.322.402-.46.54-.153.153-.313.321-.135.628.178.307.79 1.303 1.696 2.112 1.164 1.037 2.148 1.36 2.455 1.513.307.153.487.128.667-.077.18-.205.766-.895.971-1.202.204-.307.408-.256.689-.153.281.102 1.785.842 2.091.996.306.153.51.231.586.359.076.128.076.739-.168 1.427z"/>
+    </svg>
+</a>
 
 <script>
     let selectedService = "";
@@ -332,7 +348,9 @@
         }
 
         const date = document.getElementById('dateInput').value;
-        const name = document.getElementById('custName').value;
+        const firstName = document.getElementById('custFirstName').value;
+        const lastName = document.getElementById('custLastName').value;
+        const fullName = `${firstName} ${lastName}`;
         const phone = document.getElementById('custPhone').value;
 
         // הפעלת קונפטי
@@ -353,15 +371,15 @@
         // הכנת הודעת הוואטסאפ שתגיע ישירות לספר עם כפתורי SMS לאישור/ביטול
         const barberPhone = "972507126868";
         
-        const approveSmsText = encodeURIComponent(`היי ${name}, התור שלך ל-${selectedService} בתאריך ${date} בשעה ${selectedTimeSlot} אושר בהצלחה! מחכים לך בסטודיו ✂️`);
-        const cancelSmsText = encodeURIComponent(`היי ${name}, מצטערים, התור שביקשת ל-${date} בשעה ${selectedTimeSlot} אינו זמין. נשמח שתקבע שעה אחרת באתר!`);
+        const approveSmsText = encodeURIComponent(`היי ${firstName}, התור שלך ל-${selectedService} בתאריך ${date} בשעה ${selectedTimeSlot} אושר בהצלחה! מחכים לך בסטודיו ✂️`);
+        const cancelSmsText = encodeURIComponent(`היי ${firstName}, מצטערים, התור שביקשת ל-${date} בשעה ${selectedTimeSlot} אינו זמין. נשמח שתקבע שעה אחרת באתר!`);
 
         const approveSmsLink = `sms:${phone}?body=${approveSmsText}`;
         const cancelSmsLink = `sms:${phone}?body=${cancelSmsText}`;
 
-        const waMessage = `🚨 *בקשה לתור חדש!*%0A%0A✂️ *שירות:* ${selectedService}%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם הלקוח:* ${name}%0A📞 *טלפון:* ${phone}%0A%0A------------------------%0A👇 *פעולות מהירות לספר:*%0A✅ *לאישור ב-SMS:*%0A${approveSmsLink}%0A%0A❌ *לביטול ב-SMS:*%0A${cancelSmsLink}`;
+        const waMessage = `🚨 *בקשה לתור חדש!*%0A%0A✂️ *שירות:* ${selectedService}%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם הלקוח:* ${fullName}%0A📞 *טלפון:* ${phone}%0A%0A------------------------%0A👇 *פעולות מהירות לספר:*%0A✅ *לאישור ב-SMS:*%0A${approveSmsLink}%0A%0A❌ *לביטול ב-SMS:*%0A${cancelSmsLink}`;
 
-        // שליחת ההודעה לספר מאחורי הקלעים
+        // שליחת ההודעה לספר
         window.open(`https://wa.me/${barberPhone}?text=${waMessage}`, '_blank');
     });
 
