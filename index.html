@@ -67,22 +67,20 @@
         /* בס״ד באותו גובה של הפעמון (בצד ימין) */
         .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* לוגו כסוף נקי עם קו תחתון מודגש מתחת לשם בתוך ה-SVG */
+        /* מעודכן לפי הלוגו החדש שסופק */
         .logo-container {
-            width: 125px;
-            height: 125px;
-            margin: 22px auto 14px;
+            width: 140px;
+            height: 140px;
+            margin: 20px auto 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #09090b;
+            background: #000000;
             border-radius: 50%;
-            border: 3px solid transparent;
-            background-image: linear-gradient(#09090b, #09090b), var(--silver-metal);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--card-border);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
             position: relative;
+            overflow: hidden;
         }
         .logo-svg { width: 100%; height: 100%; }
 
@@ -205,26 +203,19 @@
     </div>
 
     <div class="header">
-        <!-- בס״ד ופעמון כסוף מטאלי נקי לחלוטין (ללא זהב) באותו הגובה בדיוק -->
+        <!-- בס״ד ופעמון כסוף מטאלי נקי לחלוטין באותו הגובה בדיוק -->
         <div class="bsd">בס״ד</div>
         <div class="notification-bell" onclick="openModal()" title="עדכונים">
             🔔
             <div class="bell-badge"></div>
         </div>
         
-        <!-- לוגו כסוף נקי עם קו תחתון מודגש מתחת לשם בתוך ה-SVG -->
+        <!-- לוגו מעודכן מדויק לפי התמונה החדשה (שם לבן נקי וקו תחתון דק מחולק) -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <text x="100" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
-                <!-- קו תחתון מודגש מתחת לשם -->
-                <line x1="50" y1="104" x2="150" y2="104" stroke="url(#silverGrad)" stroke-width="3" stroke-linecap="round"/>
-                <defs>
-                    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="50%" stop-color="#c0c0c0"/>
-                        <stop offset="100%" stop-color="#808080"/>
-                    </linearGradient>
-                </defs>
+                <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
+                <!-- קו תחתון מדויק לפי התמונה -->
+                <line x1="52" y1="108" x2="148" y2="108" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="24,3,24,3,24"/>
             </svg>
         </div>
 
