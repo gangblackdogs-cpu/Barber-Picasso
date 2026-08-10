@@ -336,7 +336,7 @@
 </div>
 
 <div class="floating-actions">
-    <a href="tel:0547967406" class="floating-btn floating-phone" title="חייג אלינו">
+    <a href="tel:+972507126868" class="floating-btn floating-phone" title="חייג אלינו">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
         </svg>
@@ -476,11 +476,17 @@
         // שמירת התור בזיכרון הדפדפן
         localStorage.setItem('userAppointmentDetails', JSON.stringify(appointmentInfo));
 
-        // המספר המעודכן לקבלת ההודעות
-        const targetPhone = "0547967406";
-        const smsMessage = encodeURIComponent(`בקשה לתור חדש בסטודיו!✂️\nשירות: ${selectedService}\nתאריך: ${date}\nשעה: ${selectedTimeSlot}\nשם הלקוח: ${fullName}\nטלפון: ${phone}`);
+        // הגדרת מספר היעד והודעת ה-SMS
+        const targetPhone = "+972507126868";
+        const messageText = `בקשה לתור חדש בסטודיו!✂️\nשירות: ${selectedService}\nתאריך: ${date}\nשעה: ${selectedTimeSlot}\nשם הלקוח: ${fullName}\nטלפון: ${phone}`;
 
-        // הפעלת חגיגה
+        // זיהוי מכשיר אייפון/אנדרואיד להתאמת הסימן ? או & בקישור ה-SMS
+        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const separator = isiOS ? '&' : '?';
+
+        const smsUrl = `sms:${targetPhone}${separator}body=${encodeURIComponent(messageText)}`;
+
+        // הפעלת חגיגת קונפטי
         confetti({
             particleCount: 100,
             spread: 70,
@@ -494,8 +500,8 @@
 
         checkExistingAppointment();
 
-        // שליחת הודעת SMS למספר שלך
-        window.open(`sms:${targetPhone}?body=${smsMessage}`, '_self');
+        // פתיחת ה-SMS במכשיר הלקוח
+        window.location.href = smsUrl;
     });
 
     function addReview() {
