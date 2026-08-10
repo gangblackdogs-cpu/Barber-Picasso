@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #f8f9fa; color: #1a1a1a; display: flex; justify-content: center; padding: 15px; padding-bottom: 90px; }
+        body { background-color: #f8f9fa; color: #1a1a1a; display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
         .container { width: 100%; max-width: 450px; background: #ffffff; border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; border: 1px solid #e9ecef; }
         
         /* פעמון עדכונים */
@@ -25,7 +25,6 @@
         .header { text-align: center; margin-bottom: 20px; }
         .bsd { font-size: 13px; color: #868e96; margin-bottom: 8px; font-weight: bold; }
         
-        /* לוגו עגול */
         .logo-container {
             width: 135px;
             height: 135px;
@@ -56,7 +55,6 @@
         .existing-appointment-title { font-size: 15px; font-weight: bold; color: #2b8a3e; margin-bottom: 6px; }
         .existing-appointment-details { font-size: 13.5px; color: #2b2b2b; line-height: 1.5; }
 
-        /* סטטוס פתוח/סגור + Waze */
         .status-and-location { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
         .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; }
         .status-badge.open { background: #e6fcf5; color: #0ca678; border: 1px solid #96f2d7; }
@@ -101,21 +99,18 @@
         .time-btn:hover { background: #f1f3f5; border-color: #adb5bd; }
         .time-btn.selected { background: #1a1a1a; color: #ffffff; font-weight: bold; border-color: #1a1a1a; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transform: scale(1.02); }
         
-        .error-msg { color: #f03e3e; font-size: 12px; display: none; margin-bottom: 10px; text-align: center; }
+        .error-msg { color: #f03e3e; font-size: 12px; display: none; margin-bottom: 10px; text-align: center; font-weight: bold; }
         .submit-btn { width: 100%; background: #25D366; color: #ffffff; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25); transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .submit-btn:hover { background: #20ba5a; transform: translateY(-2px); }
 
-        /* הודעת אישור לקוח באתר */
         .confirmation-box { display: none; background: #e6fcf5; border: 1px solid #25D366; border-radius: 14px; padding: 20px; text-align: center; margin-top: 20px; animation: fadeIn 0.4s ease; }
         .confirmation-box h3 { color: #0ca678; font-size: 18px; margin-bottom: 8px; }
         .confirmation-box p { color: #2b8a3e; font-size: 14px; line-height: 1.4; }
 
-        /* גלריית תמונות */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .gallery-item { width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid #e9ecef; background: #f8f9fa; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* אזור ביקורות */
         .reviews-container { margin-top: 15px; }
         .review-card { background: #f8f9fa; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #e9ecef; }
         .review-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
@@ -126,8 +121,8 @@
         .add-review-box { background: #f8f9fa; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #e9ecef; }
         .admin-btn { font-size: 11px; color: #868e96; text-align: center; margin-top: 25px; cursor: pointer; }
 
-        /* כפתורים צפים בחלק התחתון */
-        .floating-actions { position: fixed; bottom: 20px; left: 20px; display: flex; gap: 10px; z-index: 90; }
+        /* כפתורים צפים בחלק התחתון - טלפון מעל וואטסאפ */
+        .floating-actions { position: fixed; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 90; }
         .floating-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #ffffff; text-decoration: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .floating-btn:hover { transform: scale(1.1); }
         .floating-whatsapp { background: #25D366; }
@@ -137,13 +132,11 @@
 <body>
 
 <div class="container">
-    <!-- פעמון עדכונים -->
     <div class="notification-bell" onclick="openModal()">
         🔔
         <div class="bell-badge"></div>
     </div>
 
-    <!-- חלון עדכון/הודעה -->
     <div class="modal-overlay" id="noticeModal">
         <div class="modal-content">
             <div class="modal-title">📢 עדכון מהסטודיו</div>
@@ -166,7 +159,6 @@
 
         <h1>Sean Atlan Studio</h1>
 
-        <!-- סטטוס פתוח/סגור בלייב + כפתור ניווט Waze -->
         <div class="status-and-location">
             <div id="liveStatus" class="status-badge open">● בודק סטטוס...</div>
             <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="waze-btn">
@@ -176,7 +168,6 @@
         </div>
     </div>
 
-    <!-- תיבת תור קיים במערכת (מופיעה רק במידה והמשתמש קבע תור) -->
     <div id="existingAppointmentBox" class="existing-appointment-box">
         <div class="existing-appointment-title">📅 יש לך תור נקבע במערכת!</div>
         <div class="existing-appointment-details" id="existingAppointmentDetails"></div>
@@ -213,12 +204,16 @@
             </div>
         </div>
 
-        <!-- שלב 2: בחירת תאריך ושעה -->
+        <!-- שלב 2: בחירת תאריך -->
         <div id="step2" class="step-hidden">
-            <div class="section-title">2️⃣ בחר תאריך ושעה</div>
+            <div class="section-title">2️⃣ בחר תאריך לתור</div>
             <input type="date" id="dateInput" required onchange="onDateChange(this)">
             <div class="error-msg" id="errorMsg">המספרה סגורה בימי שישי ושבת. אנא בחר יום אחר.</div>
+        </div>
 
+        <!-- שלב 3: בחירת שעה (מופיע רק אחרי בחירת תאריך) -->
+        <div id="step3" class="step-hidden">
+            <div class="section-title">3️⃣ בחר שעה פנויה</div>
             <div class="time-slots" id="timeSlots">
                 <div class="time-btn" onclick="selectTime(this)">10:30</div>
                 <div class="time-btn" onclick="selectTime(this)">11:00</div>
@@ -242,9 +237,9 @@
             </div>
         </div>
 
-        <!-- שלב 3: פרטים אישיים -->
-        <div id="step3" class="step-hidden">
-            <div class="section-title">3️⃣ פרטים אישיים</div>
+        <!-- שלב 4: פרטים אישיים -->
+        <div id="step4" class="step-hidden">
+            <div class="section-title">4️⃣ פרטים אישיים</div>
             <div class="name-group">
                 <input type="text" id="custFirstName" placeholder="שם פרטי" required>
                 <input type="text" id="custLastName" placeholder="שם משפחה" required>
@@ -257,21 +252,17 @@
         </div>
     </form>
 
-    <!-- הודעת אישור לקוח באתר -->
     <div id="confirmationBox" class="confirmation-box">
         <h3>בקשת התור נשלחה בהצלחה! 🎉</h3>
         <p>הבקשה הועברה לספר לאישור.<br>מיד תשלח אליך הודעת SMS לאישור סופי של התור. תודה!</p>
     </div>
 
-    <!-- גלריית תמונות עבודות -->
     <div class="section-title" id="galleryTitle" style="display:none;">📸 עבודות מהסטודיו</div>
     <div class="gallery-grid" id="galleryGrid"></div>
 
-    <!-- אזור ביקורות -->
     <div class="section-title">💬 ביקורות לקוחות</div>
     <div class="reviews-container" id="reviewsContainer"></div>
 
-    <!-- טופס הוספת ביקורת -->
     <div class="add-review-box">
         <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #1a1a1a;">השאר ביקורת:</div>
         <input type="text" id="reviewerName" placeholder="השם שלך" style="padding: 8px; font-size: 12px;">
@@ -283,15 +274,13 @@
     <input type="file" id="adminFileInput" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
 </div>
 
-<!-- כפתורים צפים בתחתית הדף -->
+<!-- כפתורים צפים: טלפון מעל וואטסאפ -->
 <div class="floating-actions">
-    <!-- כפתור חיוג מהיר -->
     <a href="tel:0507126868" class="floating-btn floating-phone" title="חייג אלינו">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
         </svg>
     </a>
-    <!-- כפתור וואטסאפ -->
     <a href="https://wa.me/972507126868?text=היי,%20יש%20לי%20שאלה%20לגבי%20תור" target="_blank" class="floating-btn floating-whatsapp" title="דבר איתנו בוואטסאפ">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.012 2c-5.508 0-9.989 4.481-9.989 9.989 0 1.764.459 3.487 1.332 5.006l-1.417 5.176 5.297-1.389c1.464.8 3.125 1.22 4.777 1.22h.004c5.508 0 9.99-4.482 9.99-9.99-.001-5.508-4.483-9.989-9.994-9.989zm5.82 14.123c-.244.688-1.427 1.317-1.984 1.396-.525.074-1.206.105-1.939-.129-.444-.141-1.02-.33-1.758-.65-3.093-1.341-5.111-4.474-5.267-4.68-.155-.208-1.267-1.688-1.267-3.222 0-1.534.802-2.288 1.083-2.583.281-.295.612-.369.816-.369.204 0 .408.002.586.01.19.008.445-.072.695.529.257.616.877 2.14.954 2.296.077.155.129.338.026.545-.102.207-.154.338-.307.518-.153.18-.322.402-.46.54-.153.153-.313.321-.135.628.178.307.79 1.303 1.696 2.112 1.164 1.037 2.148 1.36 2.455 1.513.307.153.487.128.667-.077.18-.205.766-.895.971-1.202.204-.307.408-.256.689-.153.281.102 1.785.842 2.091.996.306.153.51.231.586.359.076.128.076.739-.168 1.427z"/>
@@ -305,7 +294,11 @@
     let selectedDuration = "";
     let selectedTimeSlot = "";
 
-    // בדיקת תור קיים
+    // הגדרת תאריך מינימום להיום
+    const dateInputEl = document.getElementById('dateInput');
+    const todayStr = new Date().toISOString().split('T')[0];
+    dateInputEl.setAttribute('min', todayStr);
+
     function checkExistingAppointment() {
         const appointmentData = localStorage.getItem('userAppointmentDetails');
         if (appointmentData) {
@@ -351,29 +344,39 @@
         step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function onDateChange(input) {
+        if (!input.value) return;
+        
+        const dateParts = input.value.split('-');
+        const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+        const day = date.getDay();
+        const errorMsg = document.getElementById('errorMsg');
+        const step3 = document.getElementById('step3');
+        
+        // שישי (5) וסופי שבוע/שבת (6) סגורים
+        if (day === 5 || day === 6) {
+            errorMsg.style.display = 'block';
+            step3.classList.add('step-hidden');
+            step3.classList.remove('step-visible');
+            document.getElementById('step4').classList.add('step-hidden');
+            return;
+        } else {
+            errorMsg.style.display = 'none';
+            step3.classList.remove('step-hidden');
+            step3.classList.add('step-visible');
+            step3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
     function selectTime(el) {
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
         el.classList.add('selected');
         selectedTimeSlot = el.innerText;
 
-        const step3 = document.getElementById('step3');
-        step3.classList.remove('step-hidden');
-        step3.classList.add('step-visible');
-        step3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function onDateChange(input) {
-        const date = new Date(input.value);
-        const day = date.getDay();
-        const errorMsg = document.getElementById('errorMsg');
-        
-        if (day === 5 || day === 6) {
-            errorMsg.style.display = 'block';
-            input.value = '';
-            return;
-        } else {
-            errorMsg.style.display = 'none';
-        }
+        const step4 = document.getElementById('step4');
+        step4.classList.remove('step-hidden');
+        step4.classList.add('step-visible');
+        step4.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
@@ -382,8 +385,9 @@
         const lastBookingTime = localStorage.getItem('lastUserBookingTimestamp');
         const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
         
+        // בדיקת חסימת תור נוסף רק במידה וכבר נקבע תור בעבר
         if (lastBookingTime && (Date.now() - parseInt(lastBookingTime)) < ONE_WEEK_MS) {
-            alert('ניתן לקבוע תור אחד בלבד בשבוע.');
+            alert('כבר קבעת תור במערכת. ניתן לקבוע תור אחד בלבד בשבוע.');
             return;
         }
 
@@ -398,7 +402,6 @@
         const fullName = `${firstName} ${lastName}`;
         const phone = document.getElementById('custPhone').value;
 
-        // שמירת פרטי התור במכשיר של המשתמש
         const appointmentInfo = {
             service: selectedService,
             date: date,
@@ -408,23 +411,19 @@
         localStorage.setItem('userAppointmentDetails', JSON.stringify(appointmentInfo));
         localStorage.setItem('lastUserBookingTimestamp', Date.now().toString());
 
-        // הפעלת קונפטי
         confetti({
             particleCount: 100,
             spread: 70,
             origin: { y: 0.6 }
         });
 
-        // הסתרת הטופס והצגת הודעת תודה ללקוח באתר
         document.getElementById('bookingForm').style.display = 'none';
         const confBox = document.getElementById('confirmationBox');
         confBox.style.display = 'block';
         confBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // הצגת התיבה בראש הדף בלייב
         checkExistingAppointment();
 
-        // הכנת הודעת הוואטסאפ שתגיע ישירות לספר
         const barberPhone = "972507126868";
         
         const approveSmsText = encodeURIComponent(`היי ${firstName}, התור שלך ל-${selectedService} בתאריך ${date} בשעה ${selectedTimeSlot} אושר בהצלחה! מחכים לך בסטודיו ✂️`);
@@ -435,7 +434,6 @@
 
         const waMessage = `🚨 *בקשה לתור חדש!*%0A%0A✂️ *שירות:* ${selectedService}%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם הלקוח:* ${fullName}%0A📞 *טלפון:* ${phone}%0A%0A------------------------%0A👇 *פעולות מהירות לספר:*%0A✅ *לאישור ב-SMS:*%0A${approveSmsLink}%0A%0A❌ *לביטול ב-SMS:*%0A${cancelSmsLink}`;
 
-        // שליחת ההודעה לספר
         window.open(`https://wa.me/${barberPhone}?text=${waMessage}`, '_blank');
     });
 
