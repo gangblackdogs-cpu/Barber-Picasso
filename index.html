@@ -305,17 +305,17 @@
                 <input type="text" id="custFirstName" placeholder="שם פרטי" required>
                 <input type="text" id="custLastName" placeholder="שם משפחה" required>
             </div>
-            <input type="tel" id="custPhone" placeholder="מספר טלפון לקבלת אישור" required>
+            <input type="tel" id="custPhone" placeholder="מספר טלפון שלך" required>
 
             <button type="submit" id="submitBtn" class="submit-btn">
-                <span>אישור וקביעת תור באתר</span> ✨
+                <span>אישור וקביעת תור ב-SMS</span> 📱
             </button>
         </div>
     </form>
 
     <div id="confirmationBox" class="confirmation-box">
         <h3>התור שלך נקבע בהצלחה! 🎉</h3>
-        <p>הפרטים נרשמו במערכת הסטודיו.<br>נשמח לראותך בזמן!</p>
+        <p>הודעת SMS עם פרטי התור נשלחה לספר.<br>נשמח לראותך בזמן!</p>
     </div>
 
     <div class="section-title" id="galleryTitle" style="display:none;">📸 עבודות מהסטודיו</div>
@@ -336,7 +336,7 @@
 </div>
 
 <div class="floating-actions">
-    <a href="tel:0507126868" class="floating-btn floating-phone" title="חייג אלינו">
+    <a href="tel:0547967406" class="floating-btn floating-phone" title="חייג אלינו">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
         </svg>
@@ -476,14 +476,11 @@
         // שמירת התור בזיכרון הדפדפן
         localStorage.setItem('userAppointmentDetails', JSON.stringify(appointmentInfo));
 
-        // שליחת נתונים שקטה ברקע (ניתן לחבר לשרת שליחת SMS או Webhook)
-        fetch('https://formspree.io/f/xqkvpbql', { // כתובת הדגמה לשליחה שקטה
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(appointmentInfo)
-        }).catch(err => console.log('Sent locally'));
+        // המספר המעודכן לקבלת ההודעות
+        const targetPhone = "0547967406";
+        const smsMessage = encodeURIComponent(`בקשה לתור חדש בסטודיו!✂️\nשירות: ${selectedService}\nתאריך: ${date}\nשעה: ${selectedTimeSlot}\nשם הלקוח: ${fullName}\nטלפון: ${phone}`);
 
-        // הפעלת חגיגה ושינוי תצוגה בלבד - ללא יציאה מהאתר!
+        // הפעלת חגיגה
         confetti({
             particleCount: 100,
             spread: 70,
@@ -496,6 +493,9 @@
         confBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         checkExistingAppointment();
+
+        // שליחת הודעת SMS למספר שלך
+        window.open(`sms:${targetPhone}?body=${smsMessage}`, '_self');
     });
 
     function addReview() {
