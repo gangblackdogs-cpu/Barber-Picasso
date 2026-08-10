@@ -6,13 +6,6 @@
     <title>Sean Atlan Studio</title>
     <!-- ספריית קונפטי -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- ספריית EmailJS לשליחת מיילים אוטומטית -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY");
-        })();
-    </script>
     <style>
         :root {
             --bg-black: #000000;
@@ -336,14 +329,14 @@
             <input type="tel" id="custPhone" placeholder="מספר טלפון שלך" required>
 
             <button type="submit" id="submitBtn" class="submit-btn">
-                <span>קבע תור (שליחה אוטומטית למייל)</span> 📩
+                <span>קבע תור (שליחה בוואטסאפ)</span> 💬
             </button>
         </div>
     </form>
 
     <div id="confirmationBox" class="confirmation-box">
         <h3>התור שלך נקבע בהצלחה! 🎉</h3>
-        <p>פרטי התור נשלחו אל האימייל של הסטודיו (seanatlan1@gmail.com) בהצלחה.<br>מחכים לראותך בזמן!</p>
+        <p>פרטי התור מוכנים לשליחה בוואטסאפ לסטודיו.<br>מחכים לראותך בזמן!</p>
     </div>
 
     <div class="section-title" id="galleryTitle" style="display:none;">📸 עבודות מהסטודיו</div>
@@ -512,32 +505,19 @@
         
         localStorage.setItem('userAppointmentDetails', JSON.stringify(appointmentInfo));
 
-        const templateParams = {
-            to_email: 'seanatlan1@gmail.com',
-            from_name: fullName,
-            service_name: selectedService,
-            appointment_date: date,
-            appointment_time: selectedTimeSlot,
-            phone_number: phone
-        };
+        // יצירת הודעת וואטסאפ אוטומטית למספר 0507126868 (או המספר המבוקש)
+        const message = `שלום, קבעתי תור חדש בסטודיו:\nשם: ${fullName}\nשירות: ${selectedService}\nתאריך: ${date}\nשעה: ${selectedTimeSlot}\nטלפון: ${phone}`;
+        const whatsappUrl = `https://wa.me/972507126868?text=${encodeURIComponent(message)}`;
 
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.innerText = "שולח תור לאימייל...";
-        submitBtn.disabled = true;
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        document.getElementById('bookingForm').style.display = 'none';
+        const confBox = document.getElementById('confirmationBox');
+        confBox.style.display = 'block';
+        confBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        checkExistingAppointment();
 
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-            .then(function(response) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                document.getElementById('bookingForm').style.display = 'none';
-                const confBox = document.getElementById('confirmationBox');
-                confBox.style.display = 'block';
-                confBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                checkExistingAppointment();
-            }, function(error) {
-                alert("אירעה שגיאה בשליחת התור. אנא נסה שוב או צור קשר בוואטסאפ.");
-                submitBtn.innerText = "קבע תור (שליחה אוטומטית למייל)";
-                submitBtn.disabled = false;
-            });
+        // פתיחת וואטסאפ לשליחת ההודעה לסטודיו
+        window.open(whatsappUrl, '_blank');
     });
 
     function addReview() {
