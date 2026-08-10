@@ -24,7 +24,7 @@
         body { background-color: var(--bg-black); color: var(--text-main); display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
         .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1.5px solid var(--card-border); }
         
-        /* פעמון כסוף זוהר בקטנה מטאלי נקי לחלוטין */
+        /* פעמון כסוף */
         .notification-bell { 
             position: absolute; 
             top: 0; 
@@ -57,10 +57,10 @@
 
         .header { text-align: center; margin-bottom: 22px; position: relative; }
         
-        /* בס״ד באותו גובה של הפעמון (בצד ימין) */
+        /* בס״ד */
         .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* לוגו עם קו ישר מסביב וזוהר כסוף עדין בקטנה */
+        /* לוגו */
         .logo-container {
             width: 140px;
             height: 140px;
@@ -126,6 +126,14 @@
         .apt-btn-change:hover { filter: brightness(1.1); }
         .apt-btn-cancel { background: #ef4444; color: #fff; }
         .apt-btn-cancel:hover { background: #dc2626; }
+
+        /* ההערה הקטנה החדשה */
+        .cancel-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-weight: 500;
+        }
 
         .section-title { font-size: 16px; font-weight: 800; margin: 26px 0 14px 0; color: var(--silver-bright); display: flex; align-items: center; gap: 8px; text-shadow: 0 0 8px rgba(255,255,255,0.15); }
         
@@ -236,6 +244,7 @@
         </div>
     </div>
 
+    <!-- תיבת התור הקיים -->
     <div id="existingAppointmentBox" class="existing-appointment-box">
         <div class="existing-appointment-title">📅 יש לך תור נקבע במערכת!</div>
         <div class="existing-appointment-details" id="existingAppointmentDetails"></div>
@@ -243,6 +252,7 @@
             <button class="apt-btn apt-btn-change" onclick="changeAppointment()">✏️ שינוי זמן</button>
             <button class="apt-btn apt-btn-cancel" onclick="cancelAppointment()">❌ ביטול תור</button>
         </div>
+        <div class="cancel-note">* לביטול התור יש להודיע מראש</div>
     </div>
 
     <form id="bookingForm">
