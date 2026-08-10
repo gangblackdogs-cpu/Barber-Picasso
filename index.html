@@ -29,9 +29,9 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: var(--bg-black); color: var(--text-main); display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
-        .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1px solid var(--card-border); }
+        .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1.5px solid var(--card-border); }
         
-        /* פעמון כסוף לגמרי מטאלי בוהק */
+        /* פעמון כסוף לגמרי מטאלי בוהק (ללא שמץ של זהב) */
         .notification-bell { 
             position: absolute; 
             top: 0; 
@@ -67,7 +67,7 @@
         /* בס״ד באותו גובה של הפעמון (בצד ימין) */
         .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* לוגו כסוף נקי בלי קווים מסביב עם קו תחתון מתחת לשם */
+        /* לוגו כסוף נקי עם קו תחתון מודגש מתחת לשם בתוך ה-SVG */
         .logo-container {
             width: 125px;
             height: 125px;
@@ -205,19 +205,19 @@
     </div>
 
     <div class="header">
-        <!-- בס״ד ופעמון כסוף מטאלי באותו הגובה בדיוק -->
+        <!-- בס״ד ופעמון כסוף מטאלי נקי לחלוטין (ללא זהב) באותו הגובה בדיוק -->
         <div class="bsd">בס״ד</div>
         <div class="notification-bell" onclick="openModal()" title="עדכונים">
             🔔
             <div class="bell-badge"></div>
         </div>
         
-        <!-- לוגו כסוף נקי ללא קווים מסביב, עם קו תחתון מתחת לשם -->
+        <!-- לוגו כסוף נקי עם קו תחתון מודגש מתחת לשם בתוך ה-SVG -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
-                <!-- קו תחתון מתחת לשם -->
-                <line x1="55" y1="108" x2="145" y2="108" stroke="url(#silverGrad)" stroke-width="2" stroke-linecap="round"/>
+                <text x="100" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
+                <!-- קו תחתון מודגש מתחת לשם -->
+                <line x1="50" y1="104" x2="150" y2="104" stroke="url(#silverGrad)" stroke-width="3" stroke-linecap="round"/>
                 <defs>
                     <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#ffffff"/>
@@ -234,7 +234,7 @@
             גליקסון 41, נתניה
         </div>
 
-        <!-- כפתורי סושיאל בסדר שביקשת עם תמונת Waze ברורה ונורמלית -->
+        <!-- כפתורי סושיאל עם תמונת Waze נורמלית וברורה -->
         <div class="social-buttons-row">
             <!-- 1. טלפון -->
             <a href="tel:+972507126868" class="social-icon-btn" title="חייג אלינו">
@@ -248,7 +248,7 @@
             <a href="https://www.instagram.com/seanatlan" target="_blank" class="social-icon-btn" title="אינסטגרם">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <!-- 4. ווייז עם לוגו רשמי מדויק ונקי -->
+            <!-- 4. ווייז נורמלי וברור -->
             <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="social-icon-btn" title="נווט ב-Waze">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.348 5.652a9.946 9.946 0 0 0-7.072-2.924c-5.523 0-10 4.477-10 10 0 1.764.464 3.425 1.274 4.868L2.25 21.75l4.436-1.162a9.92 9.92 0 0 0 5.59 1.686c5.523 0 10-4.477 10-10 0-2.673-1.041-5.182-2.928-7.072zm-7.072 14.122a8.217 8.217 0 0 1-4.42-1.272l-.316-.188-3.28.86.872-3.193-.205-.332a8.243 8.243 0 1 1 7.349 4.125z"/>
