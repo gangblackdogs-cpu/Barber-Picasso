@@ -31,10 +31,10 @@
         body { background-color: var(--bg-black); color: var(--text-main); display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
         .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1px solid var(--card-border); }
         
-        /* פעמון כסוף בוהק בצד שמאל */
-        .notification-bell { position: absolute; top: 22px; left: 22px; background: #1a1a1e; border: 1.5px solid var(--silver-bright); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; z-index: 10; transition: 0.2s; color: var(--silver-bright); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-        .notification-bell:hover { background: #2a2a2e; transform: scale(1.05); }
-        .bell-badge { position: absolute; top: 3px; right: 3px; width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; border: 2px solid var(--card-bg); }
+        /* פעמון כסוף בוהק באותו גובה של הבס״ד (בצד שמאל) */
+        .notification-bell { position: absolute; top: 0; left: 4px; background: var(--silver-metal); border: 1.5px solid var(--silver-bright); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; z-index: 10; transition: 0.2s; color: #000; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        .notification-bell:hover { filter: brightness(1.15); transform: scale(1.05); }
+        .bell-badge { position: absolute; top: 2px; right: 2px; width: 9px; height: 9px; background-color: #ef4444; border-radius: 50%; border: 2px solid var(--card-bg); }
         
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; backdrop-filter: blur(6px); }
         .modal-content { background: var(--card-bg); border-radius: 20px; padding: 24px; width: 100%; max-width: 350px; border: 1px solid var(--card-border); text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
@@ -45,9 +45,10 @@
 
         .header { text-align: center; margin-bottom: 22px; position: relative; }
         
-        .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+        /* בס״ד באותו גובה של הפעמון (בצד ימין) */
+        .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* לוגו בעיצוב כסוף בוהק ומדויק מסביב */
+        /* לוגו כסוף נקי בלי קווים מסביב */
         .logo-container {
             width: 125px;
             height: 125px;
@@ -63,14 +64,6 @@
             background-clip: padding-box, border-box;
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
             position: relative;
-        }
-        .logo-container::after {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 1px dashed rgba(255, 255, 255, 0.35);
-            pointer-events: none;
         }
         .logo-svg { width: 100%; height: 100%; }
 
@@ -133,10 +126,7 @@
         .service-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
         .service-info p { font-size: 12px; color: var(--text-muted); font-weight: 500; }
         
-        /* כל השירותים בצבע כסוף בוהק ואחיד */
         .service-1 h3, .service-2 h3, .service-3 h3 { color: var(--silver-bright); text-shadow: 0 0 8px rgba(255,255,255,0.3); font-weight: 800; }
-
-        /* כל המחירים בצבע כסוף בוהק ואחיד */
         .price { font-weight: 800; font-size: 19px; color: var(--silver-bright); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
 
         .step-hidden { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
@@ -185,11 +175,6 @@
 <body>
 
 <div class="container">
-    <div class="notification-bell" onclick="openModal()">
-        🔔
-        <div class="bell-badge"></div>
-    </div>
-
     <div class="modal-overlay" id="noticeModal">
         <div class="modal-content">
             <div class="modal-title">📢 עדכון מהסטודיו</div>
@@ -201,13 +186,17 @@
     </div>
 
     <div class="header">
+        <!-- בס״ד ופעמון כסוף בוהק באותו הגובה בדיוק -->
         <div class="bsd">בס״ד</div>
+        <div class="notification-bell" onclick="openModal()" title="עדכונים">
+            🔔
+            <div class="bell-badge"></div>
+        </div>
         
-        <!-- לוגו מעוצב עם מסגרת כסופה בוהקת -->
+        <!-- לוגו כסוף נקי ללא קווים מסביב -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
-                <line x1="25" y1="112" x2="175" y2="112" stroke="#d1d5db" stroke-width="1.5" />
+                <text x="100" y="105" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
             </svg>
         </div>
 
@@ -217,7 +206,7 @@
             גליקסון 41, נתניה
         </div>
 
-        <!-- כפתורי סושיאל: טלפון (הכי ימין), וואטסאפ (שמאלו), אינסטגרם, וויז (שמאל) -->
+        <!-- כפתורי סושיאל בסדר שביקשת -->
         <div class="social-buttons-row">
             <!-- 1. טלפון (הכי ימין) -->
             <a href="tel:+972507126868" class="social-icon-btn" title="חייג אלינו">
@@ -231,7 +220,7 @@
             <a href="https://www.instagram.com/seanatlan" target="_blank" class="social-icon-btn" title="אינסטגרם">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <!-- 4. ווייז עם סמל ה-Waze המקורי והמדויק (הכי שמאל) -->
+            <!-- 4. ווייז (הכי שמאל) -->
             <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="social-icon-btn" title="נווט ב-Waze">
                 <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M394.2 136.2C365.3 103.1 321.8 84 275.9 84c-78.2 0-148 49.3-174.6 122.9-26.6 73.6-3.8 156.4 57.6 206.1l-24.1 61.2c-5.2 13.1 6.8 25.1 19.9 19.9l68.7-27.1c32.7 10.8 68.3 16.5 104.5 16.5 97.2 0 186.2-59.5 214-150.3 27.7-90.8-7.7-188.7-83.3-246.4zM275.9 411.3c-28.7 0-57-5.5-83.5-16.1l-11.4-4.5-38.3 15.1 13.5-34.4-7.4-10.4c-47.5-66.9-42.3-157.9 12.8-218.4 55.1-60.5 143.2-69.5 207.2-20.9 64 48.6 84 136.6 46.2 208.7-37.8 72.1-112.5 116-192.1 116z"/>
@@ -276,7 +265,7 @@
                 </div>
             </div>
 
-            <!-- שירות 3 (שונה לכסוף בוהק) -->
+            <!-- שירות 3 -->
             <div class="service-card" onclick="selectService(this, 'תספורת + זקן + מסכת שחורים', '45', '45')">
                 <div class="service-header">
                     <div class="service-info service-3">
@@ -531,7 +520,7 @@
             return;
         }
 
-        const container = document.getElementById('reviewsContainer');
+        The container = document.getElementById('reviewsContainer');
         const newReview = document.createElement('div');
         newReview.className = 'review-card';
         newReview.innerHTML = `
@@ -541,7 +530,7 @@
             </div>
             <div class="review-text">${text}</div>
         `;
-        container.appendChild(newReview);
+        document.getElementById('reviewsContainer').appendChild(newReview);
 
         document.getElementById('reviewerName').value = '';
         document.getElementById('reviewerText').value = '';
