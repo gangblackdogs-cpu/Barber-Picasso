@@ -14,7 +14,7 @@
         .notification-bell:hover { background: #333; transform: scale(1.05); }
         .bell-badge { position: absolute; top: 2px; right: 2px; width: 10px; height: 10px; background-color: #ff4757; border-radius: 50%; border: 2px solid #1e1e1e; }
         
-        /* חלון מודאל הודעות */
+        /* חלון מודאל */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
         .modal-content { background: #262626; border-radius: 14px; padding: 20px; width: 100%; max-width: 350px; border: 1px solid #444; text-align: center; }
         .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #fff; }
@@ -43,12 +43,12 @@
         h1 { font-size: 24px; margin-bottom: 4px; font-weight: 800; letter-spacing: 0.5px; }
         .address { color: #aaa; font-size: 13px; margin-bottom: 15px; }
         
-        /* תיאור מעוצב ומזמין */
+        /* תיאור קצר ומעוצב לבקשתך */
         .welcome-box { background: linear-gradient(145deg, #262626, #1f1f1f); border-radius: 12px; padding: 18px; margin-bottom: 20px; border: 1px solid #333; }
         .welcome-title { font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 8px; text-align: center; }
-        .welcome-text { font-size: 14px; color: #ccc; line-height: 1.6; margin-bottom: 12px; text-align: center; }
+        .welcome-text { font-size: 13.5px; color: #ddd; line-height: 1.5; margin-bottom: 12px; text-align: center; }
         .rules-list { border-top: 1px solid #333; padding-top: 10px; margin-top: 10px; }
-        .rule-item { font-size: 12px; color: #aaa; line-height: 1.5; margin-bottom: 4px; }
+        .rule-item { font-size: 12px; color: #aaa; line-height: 1.4; margin-bottom: 4px; }
 
         .section-title { font-size: 16px; font-weight: bold; margin: 22px 0 12px 0; color: #fff; display: flex; align-items: center; gap: 8px; }
         
@@ -82,7 +82,7 @@
         .review-text { font-size: 12.5px; color: #ccc; }
         
         .add-review-box { background: #222; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #333; }
-        .star-select { display: flex; gap: 8px; margin-bottom: 10px; cursor: pointer; color: #f1c40f; font-size: 18px; }
+        .admin-btn { font-size: 11px; color: #555; text-align: center; margin-top: 25px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -98,10 +98,10 @@
     <div class="modal-overlay" id="noticeModal">
         <div class="modal-content">
             <div class="modal-title">📢 עדכון מהסטודיו</div>
-            <div class="modal-body" id="noticeText">
-                ברוכים הבאים לסטודיו! שעות הפעילות מעודכנות בזמן אמת. נשמח לראותכם 🔥
+            <div class="modal-body">
+                ברוכים הבאים! שעות הפעילות מעודכנות בזמן אמת. נשמח לראותכם ✂️
             </div>
-            <button class="close-btn" onclick="closeModal()">הבנתי, תודה</button>
+            <button class="close-btn" onclick="closeModal()">סגור</button>
         </div>
     </div>
 
@@ -122,16 +122,17 @@
         <div class="address">📍 גליקסון 41, נתניה</div>
     </div>
 
-    <!-- תיאור משודרג וחי -->
+    <!-- תיאור מקוצר ורענן -->
     <div class="welcome-box">
-        <div class="welcome-title">חווית תספורת ברמה אחרת ⭐</div>
+        <div class="welcome-title">ברוך הבא לסטודיו ✂️🔥</div>
         <div class="welcome-text">
-            מוכן לשדרג את הלוק? בסטודיו שמים דגש על כל שערה ושערה! מתאימים לך תספורת ודיוק מנצח בהתאם לסטייל המיוחד שלך.<br><br>
-            ⚡ **מקצועיות • יחס אישי • סטייל ללא פשרות**
+            הגיע הזמן להסתפר אצל אומן! ✨<br>
+            נתאים את התספורת במיוחד למבנה הראש והסגנון שלך.<br>
+            100% דיוק, איכות ויחס אישי עד התוצאה המושלמת 💈
         </div>
         <div class="rules-list">
-            <div class="rule-item">📌 * לביטול/שינוי תור יש להודיע מראש.</div>
-            <div class="rule-item">📌 * שומרים על סטריליות וחיטוי ברמה הגבוהה ביותר!</div>
+            <div class="rule-item">⚠️ לביטול/החלפת תור יש להודיע מראש.</div>
+            <div class="rule-item">🧼 שומרים על היגיינה וחיטוי ברמה הגבוהה ביותר.</div>
         </div>
     </div>
 
@@ -147,7 +148,7 @@
                 <div class="price">₪35</div>
             </div>
             <div class="service-card" onclick="selectService(this, 'תספורת + זקן + מסכת שחורים', '45', '45')">
-                <div class="service-info"><h3>תספורת + זקן + טיפול פנים</h3><p>45 דקות</p></div>
+                <div class="service-info"><h3>תספורת + זקן + מסכת שחורים</h3><p>45 דקות</p></div>
                 <div class="price">₪45</div>
             </div>
         </div>
@@ -185,34 +186,27 @@
         <button type="submit" class="submit-btn">קבע תור בוואטסאפ 💬</button>
     </form>
 
-    <!-- גלריית תמונות תספורות -->
-    <div class="section-title">📸 עבודות מהסטודיו</div>
-    <div class="gallery-grid">
-        <!-- תוכל להחליף את קישורי התמונות (src) בתמונות שלך! -->
-        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=300" alt="תספורת 1"></div>
-        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=300" alt="תספורת 2"></div>
-        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=300" alt="תספורת 3"></div>
-    </div>
+    <!-- גלריית תמונות עבודות (ריקה, רק למנהל) -->
+    <div class="section-title" id="galleryTitle" style="display:none;">📸 עבודות מהסטודיו</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
 
-    <!-- אזור ביקורות -->
-    <div class="section-title">💬 מה הלקוחות אומרים</div>
+    <!-- אזור ביקורות נקי -->
+    <div class="section-title">💬 ביקורות לקוחות</div>
     <div class="reviews-container" id="reviewsContainer">
-        <div class="review-card">
-            <div class="review-header">
-                <span class="review-name">עומר לוי</span>
-                <span class="review-stars">⭐⭐⭐⭐⭐</span>
-            </div>
-            <div class="review-text">תספורת אש! יחס אישי ומקצועי, יצאתי מבסוט רצח.</div>
-        </div>
+        <!-- המקום נקי, ביקורות של לקוחות יתווספו לכאן -->
     </div>
 
-    <!-- הוספת ביקורת -->
+    <!-- טופס הוספת ביקורת -->
     <div class="add-review-box">
-        <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px;">השאר ביקורת:</div>
+        <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #fff;">השאר ביקורת:</div>
         <input type="text" id="reviewerName" placeholder="השם שלך" style="padding: 8px; font-size: 12px;">
-        <textarea id="reviewerText" placeholder="איך הייתה החוויה שלך?" style="padding: 8px; font-size: 12px;"></textarea>
-        <button onclick="addReview()" style="width:100%; background:#fff; color:#000; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">שלח ביקורת</button>
+        <textarea id="reviewerText" placeholder="איך הייתה התספורת והחוויה?" style="padding: 8px; font-size: 12px;"></textarea>
+        <button onclick="addReview()" style="width:100%; background:#fff; color:#000; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">שלח ביקורת ⭐</button>
     </div>
+
+    <!-- כפתור העלאת תמונות למנהל בלבד -->
+    <div class="admin-btn" onclick="adminUploadImage()">🔒 אריאל/מנהל? לחץ להעלאת תמונה לגלריה</div>
+    <input type="file" id="adminFileInput" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
 </div>
 
 <script>
@@ -255,12 +249,12 @@
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // הגבלה: קביעת תור פעם אחת בלבד בשבוע מכל מכשיר
+        // הגבלה: תור אחד בלבד בשבוע
         const lastBookingTime = localStorage.getItem('lastUserBookingTimestamp');
         const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
         
         if (lastBookingTime && (Date.now() - parseInt(lastBookingTime)) < ONE_WEEK_MS) {
-            alert('ניתן לקבוע תור אחד בלבד בשבוע במערכת.');
+            alert('ניתן לקבוע תור אחד בלבד בשבוע.');
             return;
         }
 
@@ -273,7 +267,6 @@
         const name = document.getElementById('custName').value;
         const phone = document.getElementById('custPhone').value;
 
-        // שמירת זמן ההזמנה בטלפון
         localStorage.setItem('lastUserBookingTimestamp', Date.now().toString());
 
         const barberPhone = "972507126868";
@@ -282,13 +275,13 @@
         window.open(`https://wa.me/${barberPhone}?text=${message}`, '_blank');
     });
 
-    // הוספת ביקורת
+    // הוספת ביקורת אמיתית על ידי לקוח
     function addReview() {
         const name = document.getElementById('reviewerName').value;
         const text = document.getElementById('reviewerText').value;
 
         if(!name || !text) {
-            alert('אנא מלא שם וטקסט לביקורת');
+            alert('אנא רשום שם וחוות דעת');
             return;
         }
 
@@ -306,7 +299,33 @@
 
         document.getElementById('reviewerName').value = '';
         document.getElementById('reviewerText').value = '';
-        alert('תודה על הביקורת!');
+        alert('תודה רבה על הביקורת!');
+    }
+
+    // העלאת תמונות רק למנהל (סיסמה: 1234)
+    function adminUploadImage() {
+        const pass = prompt("הכנס סיסמת מנהל להעלאת תמונות:");
+        if(pass === "1234") {
+            document.getElementById('adminFileInput').click();
+        } else if(pass !== null) {
+            alert("סיסמה שגויה!");
+        }
+    }
+
+    function handleImageUpload(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const grid = document.getElementById('galleryGrid');
+                document.getElementById('galleryTitle').style.display = 'flex';
+                
+                const newItem = document.createElement('div');
+                newItem.className = 'gallery-item';
+                newItem.innerHTML = `<img src="${e.target.result}" alt="תספורת">`;
+                grid.appendChild(newItem);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 
