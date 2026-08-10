@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sean Atlan Studio</title>
-    <!-- ספריית קונפטי לחגיגת קביעת תור -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -42,10 +41,7 @@
         }
         .logo-svg { width: 100%; height: 100%; }
 
-        h1 { font-size: 25px; margin-bottom: 4px; font-weight: 800; letter-spacing: 0.5px; }
-        
-        /* דירוג כוכבים */
-        .rating-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.3); padding: 4px 12px; border-radius: 20px; color: #f1c40f; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        h1 { font-size: 25px; margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px; }
 
         /* סטטוס פתוח/סגור + Waze */
         .status-and-location { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
@@ -92,15 +88,10 @@
         .submit-btn { width: 100%; background: #25D366; color: #fff; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); transition: 0.2s; }
         .submit-btn:hover { background: #20ba5a; transform: translateY(-2px); }
 
-        /* סליידר לפני ואחרי */
-        .before-after-container { position: relative; width: 100%; height: 220px; border-radius: 12px; overflow: hidden; margin-top: 10px; border: 1px solid #333; }
-        .ba-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .ba-before { width: 50%; z-index: 2; overflow: hidden; border-left: 2px solid #fff; }
-        .ba-before img { width: 100%; height: 100%; object-fit: cover; }
-        .ba-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; z-index: 3; cursor: ew-resize; }
-        .ba-badge { position: absolute; bottom: 10px; padding: 4px 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 10px; font-weight: bold; border-radius: 4px; pointer-events: none; }
-        .ba-badge-after { right: 10px; }
-        .ba-badge-before { left: 10px; z-index: 4; }
+        /* הודעת אישור לקוח באתר */
+        .confirmation-box { display: none; background: #1b2e1e; border: 1px solid #25D366; border-radius: 14px; padding: 20px; text-align: center; margin-top: 20px; animation: fadeIn 0.4s ease; }
+        .confirmation-box h3 { color: #25D366; font-size: 18px; margin-bottom: 8px; }
+        .confirmation-box p { color: #ddd; font-size: 14px; line-height: 1.4; }
 
         /* גלריית תמונות */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
@@ -154,9 +145,6 @@
         </div>
 
         <h1>Sean Atlan Studio</h1>
-
-        <!-- דירוג כוכבים -->
-        <div class="rating-badge">★ 5.0 (150+ לקוחות מרוצים)</div>
 
         <!-- סטטוס פתוח/סגור בלייב + כפתור ניווט Waze -->
         <div class="status-and-location">
@@ -229,22 +217,16 @@
         <div id="step3" class="step-hidden">
             <div class="section-title">3️⃣ פרטים אישיים</div>
             <input type="text" id="custName" placeholder="שם מלא" required>
-            <input type="tel" id="custPhone" placeholder="מספר טלפון" required>
+            <input type="tel" id="custPhone" placeholder="מספר טלפון לקבלת SMS" required>
 
-            <button type="submit" class="submit-btn">קבע תור בוואטסאפ 💬</button>
+            <button type="submit" class="submit-btn">שלח בקשה לקביעת תור ✂️</button>
         </div>
     </form>
 
-    <!-- סליידר לפני ואחרי -->
-    <div class="section-title">✨ לפני ואחרי (גרור את הסליידר)</div>
-    <div class="before-after-container">
-        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=500" class="ba-img" alt="אחרי">
-        <div class="ba-before" id="baBefore">
-            <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500" alt="לפני">
-        </div>
-        <div class="ba-badge ba-badge-after">אחרי ✂️</div>
-        <div class="ba-badge ba-badge-before">לפני 🧔</div>
-        <input type="range" min="0" max="100" value="50" class="ba-slider" oninput="updateBeforeAfter(this.value)">
+    <!-- הודעת אישור ללקוח -->
+    <div id="confirmationBox" class="confirmation-box">
+        <h3>בקשת התור נשלחה בהצלחה! 🎉</h3>
+        <p>הבקשה הועברה לספר לאישור.<br>מיד תשלח אליך הודעת SMS לאישור סופי של התור. תודה!</p>
     </div>
 
     <!-- גלריית תמונות עבודות -->
@@ -276,14 +258,12 @@
     let selectedDuration = "";
     let selectedTimeSlot = "";
 
-    // בדיקת סטטוס פתוח/סגור בלייב
     function updateStoreStatus() {
         const now = new Date();
-        const day = now.getDay(); // 0 = ראשון, 5 = שישי, 6 = שבת
+        const day = now.getDay();
         const hour = now.getHours();
         const statusEl = document.getElementById('liveStatus');
 
-        // סגור בימי שישי, שבת או לפני 10:00 ואחרי 20:00
         if (day === 5 || day === 6 || hour < 10 || hour >= 20) {
             statusEl.className = 'status-badge closed';
             statusEl.innerText = '🔴 סגור כעת';
@@ -335,11 +315,6 @@
         }
     }
 
-    // עדכון סליידר לפני/אחרי
-    function updateBeforeAfter(val) {
-        document.getElementById('baBefore').style.width = val + '%';
-    }
-
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -360,7 +335,7 @@
         const name = document.getElementById('custName').value;
         const phone = document.getElementById('custPhone').value;
 
-        // הפעלת קונפטי חגיגי
+        // הפעלת קונפטי
         confetti({
             particleCount: 100,
             spread: 70,
@@ -369,12 +344,25 @@
 
         localStorage.setItem('lastUserBookingTimestamp', Date.now().toString());
 
-        const barberPhone = "972507126868";
-        const message = `היי, אני רוצה לקבוע תור:%0A✂️ *שירות:* ${selectedService} (${selectedPrice} ₪)%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם:* ${name}%0A📞 *טלפון:* ${phone}%0A📍 *סניף:* גליקסון 41, נתניה`;
+        // הסתרת הטופס והצגת הודעת תודה ללקוח באתר
+        document.getElementById('bookingForm').style.display = 'none';
+        const confBox = document.getElementById('confirmationBox');
+        confBox.style.display = 'block';
+        confBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        setTimeout(() => {
-            window.open(`https://wa.me/${barberPhone}?text=${message}`, '_blank');
-        }, 1000);
+        // הכנת הודעת הוואטסאפ שתגיע ישירות לספר עם כפתורי SMS לאישור/ביטול
+        const barberPhone = "972507126868";
+        
+        const approveSmsText = encodeURIComponent(`היי ${name}, התור שלך ל-${selectedService} בתאריך ${date} בשעה ${selectedTimeSlot} אושר בהצלחה! מחכים לך בסטודיו ✂️`);
+        const cancelSmsText = encodeURIComponent(`היי ${name}, מצטערים, התור שביקשת ל-${date} בשעה ${selectedTimeSlot} אינו זמין. נשמח שתקבע שעה אחרת באתר!`);
+
+        const approveSmsLink = `sms:${phone}?body=${approveSmsText}`;
+        const cancelSmsLink = `sms:${phone}?body=${cancelSmsText}`;
+
+        const waMessage = `🚨 *בקשה לתור חדש!*%0A%0A✂️ *שירות:* ${selectedService}%0A📅 *תאריך:* ${date}%0A⏰ *שעה:* ${selectedTimeSlot}%0A👤 *שם הלקוח:* ${name}%0A📞 *טלפון:* ${phone}%0A%0A------------------------%0A👇 *פעולות מהירות לספר:*%0A✅ *לאישור ב-SMS:*%0A${approveSmsLink}%0A%0A❌ *לביטול ב-SMS:*%0A${cancelSmsLink}`;
+
+        // שליחת ההודעה לספר מאחורי הקלעים
+        window.open(`https://wa.me/${barberPhone}?text=${waMessage}`, '_blank');
     });
 
     function addReview() {
