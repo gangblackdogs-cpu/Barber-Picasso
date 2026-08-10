@@ -31,8 +31,27 @@
         body { background-color: var(--bg-black); color: var(--text-main); display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
         .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1px solid var(--card-border); }
         
-        /* פעמון כסוף בוהק באותו גובה של הבס״ד (בצד שמאל) */
-        .notification-bell { position: absolute; top: 0; left: 4px; background: var(--silver-metal); border: 1.5px solid var(--silver-bright); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; z-index: 10; transition: 0.2s; color: #000; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        /* פעמון כסוף לגמרי מטאלי בוהק */
+        .notification-bell { 
+            position: absolute; 
+            top: 0; 
+            left: 4px; 
+            background: var(--silver-metal); 
+            border: 1.5px solid #ffffff; 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            font-size: 15px; 
+            z-index: 10; 
+            transition: 0.2s; 
+            color: #000000; 
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3); 
+            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+        }
         .notification-bell:hover { filter: brightness(1.15); transform: scale(1.05); }
         .bell-badge { position: absolute; top: 2px; right: 2px; width: 9px; height: 9px; background-color: #ef4444; border-radius: 50%; border: 2px solid var(--card-bg); }
         
@@ -48,7 +67,7 @@
         /* בס״ד באותו גובה של הפעמון (בצד ימין) */
         .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* לוגו כסוף נקי בלי קווים מסביב */
+        /* לוגו כסוף נקי בלי קווים מסביב עם קו תחתון מתחת לשם */
         .logo-container {
             width: 125px;
             height: 125px;
@@ -186,17 +205,26 @@
     </div>
 
     <div class="header">
-        <!-- בס״ד ופעמון כסוף בוהק באותו הגובה בדיוק -->
+        <!-- בס״ד ופעמון כסוף מטאלי באותו הגובה בדיוק -->
         <div class="bsd">בס״ד</div>
         <div class="notification-bell" onclick="openModal()" title="עדכונים">
             🔔
             <div class="bell-badge"></div>
         </div>
         
-        <!-- לוגו כסוף נקי ללא קווים מסביב -->
+        <!-- לוגו כסוף נקי ללא קווים מסביב, עם קו תחתון מתחת לשם -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <text x="100" y="105" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
+                <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
+                <!-- קו תחתון מתחת לשם -->
+                <line x1="55" y1="108" x2="145" y2="108" stroke="url(#silverGrad)" stroke-width="2" stroke-linecap="round"/>
+                <defs>
+                    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="50%" stop-color="#c0c0c0"/>
+                        <stop offset="100%" stop-color="#808080"/>
+                    </linearGradient>
+                </defs>
             </svg>
         </div>
 
@@ -206,13 +234,13 @@
             גליקסון 41, נתניה
         </div>
 
-        <!-- כפתורי סושיאל בסדר שביקשת -->
+        <!-- כפתורי סושיאל בסדר שביקשת עם תמונת Waze ברורה ונורמלית -->
         <div class="social-buttons-row">
-            <!-- 1. טלפון (הכי ימין) -->
+            <!-- 1. טלפון -->
             <a href="tel:+972507126868" class="social-icon-btn" title="חייג אלינו">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
-            <!-- 2. וואטסאפ (מימין לשמאל: מיד אחרי הטלפון) -->
+            <!-- 2. וואטסאפ -->
             <a href="https://wa.me/972507126868" target="_blank" class="social-icon-btn" title="שלח WhatsApp">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.301-.15-1.785-.881-2.062-.982-.276-.1-.477-.15-.678.15-.2.3-.778.982-.954 1.181-.175.2-.351.225-.652.075-.301-.15-1.27-.468-2.42-1.494-.895-.797-1.5-1.781-1.676-2.082-.175-.3-.019-.462.131-.611.136-.134.301-.35.451-.525.15-.175.201-.3.301-.5.1-.2.05-.375-.025-.525-.075-.15-.678-1.635-.93-2.238-.244-.583-.493-.504-.678-.513-.175-.008-.376-.01-.576-.01s-.526.075-.802.375c-.276.3-1.053 1.03-1.053 2.513s1.078 2.914 1.228 3.114c.15.2 2.122 3.24 5.141 4.542.718.31 1.278.495 1.714.633.722.23 1.38.197 1.9.12.58-.087 1.785-.729 2.036-1.431.25-.702.25-1.303.175-1.431-.075-.128-.276-.203-.577-.353z"/></svg>
             </a>
@@ -220,12 +248,11 @@
             <a href="https://www.instagram.com/seanatlan" target="_blank" class="social-icon-btn" title="אינסטגרם">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <!-- 4. ווייז (הכי שמאל) -->
+            <!-- 4. ווייז עם לוגו רשמי מדויק ונקי -->
             <a href="https://waze.com/ul?q=גליקסון%2041%20נתניה" target="_blank" class="social-icon-btn" title="נווט ב-Waze">
-                <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor">
-                    <path d="M394.2 136.2C365.3 103.1 321.8 84 275.9 84c-78.2 0-148 49.3-174.6 122.9-26.6 73.6-3.8 156.4 57.6 206.1l-24.1 61.2c-5.2 13.1 6.8 25.1 19.9 19.9l68.7-27.1c32.7 10.8 68.3 16.5 104.5 16.5 97.2 0 186.2-59.5 214-150.3 27.7-90.8-7.7-188.7-83.3-246.4zM275.9 411.3c-28.7 0-57-5.5-83.5-16.1l-11.4-4.5-38.3 15.1 13.5-34.4-7.4-10.4c-47.5-66.9-42.3-157.9 12.8-218.4 55.1-60.5 143.2-69.5 207.2-20.9 64 48.6 84 136.6 46.2 208.7-37.8 72.1-112.5 116-192.1 116z"/>
-                    <circle cx="196" cy="245" r="28"/>
-                    <circle cx="332" cy="245" r="28"/>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.348 5.652a9.946 9.946 0 0 0-7.072-2.924c-5.523 0-10 4.477-10 10 0 1.764.464 3.425 1.274 4.868L2.25 21.75l4.436-1.162a9.92 9.92 0 0 0 5.59 1.686c5.523 0 10-4.477 10-10 0-2.673-1.041-5.182-2.928-7.072zm-7.072 14.122a8.217 8.217 0 0 1-4.42-1.272l-.316-.188-3.28.86.872-3.193-.205-.332a8.243 8.243 0 1 1 7.349 4.125z"/>
+                    <path d="M15.421 13.882c-.37-.185-2.186-1.079-2.525-1.203-.34-.124-.587-.185-.833.185-.246.37-.954 1.203-1.169 1.45-.215.246-.431.277-.801.092-.37-.185-1.562-.575-2.977-1.836-1.1-1.002-1.84-2.24-2.056-2.61-.215-.37-.023-.57.162-.755.166-.166.37-.431.555-.648.185-.216.246-.37.37-.616.124-.246.062-.462-.031-.647-.092-.185-.833-2.008-1.141-2.75-.3-.722-.607-.624-.833-.636-.215-.012-.462-.012-.708-.012s-.647.092-.985.462c-.338.37-1.294 1.264-1.294 3.084 0 1.82 1.325 3.578 1.51 3.824.185.246 2.607 3.978 6.313 5.578.882.38 1.571.607 2.108.777.887.282 1.693.242 2.332.147.712-.106 2.186-.893 2.494-1.756.308-.863.308-1.602.215-1.756-.092-.154-.338-.246-.708-.431z"/>
                 </svg>
             </a>
         </div>
@@ -520,7 +547,7 @@
             return;
         }
 
-        The container = document.getElementById('reviewsContainer');
+        const reviewsContainer = document.getElementById('reviewsContainer');
         const newReview = document.createElement('div');
         newReview.className = 'review-card';
         newReview.innerHTML = `
@@ -530,7 +557,7 @@
             </div>
             <div class="review-text">${text}</div>
         `;
-        document.getElementById('reviewsContainer').appendChild(newReview);
+        reviewsContainer.appendChild(newReview);
 
         document.getElementById('reviewerName').value = '';
         document.getElementById('reviewerText').value = '';
