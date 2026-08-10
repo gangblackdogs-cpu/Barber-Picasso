@@ -24,7 +24,7 @@
         .header { text-align: center; margin-bottom: 20px; }
         .bsd { font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: bold; }
         
-        /* לוגו עגול בעיצוב הנקי שביקשת */
+        /* לוגו עגול */
         .logo-container {
             width: 140px;
             height: 140px;
@@ -43,7 +43,6 @@
         h1 { font-size: 24px; margin-bottom: 4px; font-weight: 800; letter-spacing: 0.5px; }
         .address { color: #aaa; font-size: 13px; margin-bottom: 15px; }
         
-        /* תיאור מקוצר וחי */
         .welcome-box { background: linear-gradient(145deg, #262626, #1f1f1f); border-radius: 12px; padding: 18px; margin-bottom: 20px; border: 1px solid #333; }
         .welcome-title { font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 8px; text-align: center; }
         .welcome-text { font-size: 13.5px; color: #ddd; line-height: 1.5; margin-bottom: 12px; text-align: center; }
@@ -53,20 +52,33 @@
         .section-title { font-size: 16px; font-weight: bold; margin: 22px 0 12px 0; color: #fff; display: flex; align-items: center; gap: 8px; }
         
         .services { display: flex; flex-direction: column; gap: 10px; }
-        .service-card { background: #2a2a2a; border: 2px solid #333; border-radius: 10px; padding: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
-        .service-card.selected { border-color: #ffffff; background: #333; }
+        .service-card { background: #2a2a2a; border: 2px solid #333; border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.25s ease; }
+        .service-card:hover { border-color: #666; }
+        .service-card.selected { border-color: #25D366; background: #26382b; }
         .service-info h3 { font-size: 15px; margin-bottom: 3px; }
         .service-info p { font-size: 12px; color: #aaa; }
         .price { font-weight: bold; font-size: 17px; color: #25D366; }
 
-        input[type="date"], input[type="text"], input[type="tel"], textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #2a2a2a; color: #fff; font-size: 14px; margin-bottom: 10px; outline: none; }
+        /* הסתרה מראש של השלבים הבאים */
+        .step-hidden { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
+        .step-visible { display: block; opacity: 1; animation: fadeIn 0.4s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input[type="date"], input[type="text"], input[type="tel"], textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #444; background: #2a2a2a; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
         textarea { resize: none; height: 70px; }
         
-        .time-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 2px; }
-        .time-btn { background: #2a2a2a; border: 1px solid #444; color: #fff; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 13px; cursor: pointer; }
-        .time-btn.selected { background: #fff; color: #000; font-weight: bold; border-color: #fff; }
+        /* עיצוב שעות חדש ומודרני */
+        .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 240px; overflow-y: auto; padding-right: 4px; margin-top: 10px; }
+        .time-btn { background: #2a2a2a; border: 1px solid #3d3d3d; color: #fff; padding: 12px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .time-btn:hover { background: #333; border-color: #666; }
+        .time-btn.selected { background: #ffffff; color: #000000; font-weight: bold; border-color: #ffffff; box-shadow: 0 0 10px rgba(255,255,255,0.3); transform: scale(1.02); }
+        
         .error-msg { color: #ff5555; font-size: 12px; display: none; margin-bottom: 10px; text-align: center; }
-        .submit-btn { width: 100%; background: #25D366; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .submit-btn { width: 100%; background: #25D366; color: #fff; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
 
         /* גלריית תמונות */
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
@@ -108,7 +120,6 @@
     <div class="header">
         <div class="bsd">בס״ד</div>
         
-        <!-- לוגו עגול עם העיצוב מהתמונה -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="300" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
@@ -120,7 +131,6 @@
         <div class="address">📍 גליקסון 41, נתניה</div>
     </div>
 
-    <!-- תיאור מקוצר ורענן -->
     <div class="welcome-box">
         <div class="welcome-title">ברוך הבא לסטודיו ✂️🔥</div>
         <div class="welcome-text">
@@ -135,9 +145,10 @@
     </div>
 
     <form id="bookingForm">
-        <div class="section-title">✂️ בחר שירות</div>
+        <!-- שלב 1: בחירת שירות -->
+        <div class="section-title">1️⃣ בחר שירות</div>
         <div class="services">
-            <div class="service-card selected" onclick="selectService(this, 'תספורת גבר', '30', '30')">
+            <div class="service-card" onclick="selectService(this, 'תספורת גבר', '30', '30')">
                 <div class="service-info"><h3>תספורת גבר</h3><p>30 דקות</p></div>
                 <div class="price">₪30</div>
             </div>
@@ -151,48 +162,52 @@
             </div>
         </div>
 
-        <div class="section-title">📅 בחר תאריך ושעה</div>
-        <input type="date" id="dateInput" required onchange="onDateChange(this)">
-        <div class="error-msg" id="errorMsg">המספרה סגורה בימי שישי ושבת. אנא בחר יום אחר.</div>
+        <!-- שלב 2: בחירת תאריך ושעה (נחשף לאחר בחירת שירות) -->
+        <div id="step2" class="step-hidden">
+            <div class="section-title">2️⃣ בחר תאריך ושעה</div>
+            <input type="date" id="dateInput" required onchange="onDateChange(this)">
+            <div class="error-msg" id="errorMsg">המספרה סגורה בימי שישי ושבת. אנא בחר יום אחר.</div>
 
-        <div class="time-slots" id="timeSlots">
-            <div class="time-btn" onclick="selectTime(this)">10:30</div>
-            <div class="time-btn" onclick="selectTime(this)">11:00</div>
-            <div class="time-btn" onclick="selectTime(this)">11:30</div>
-            <div class="time-btn" onclick="selectTime(this)">12:00</div>
-            <div class="time-btn" onclick="selectTime(this)">12:30</div>
-            <div class="time-btn" onclick="selectTime(this)">13:00</div>
-            <div class="time-btn" onclick="selectTime(this)">13:30</div>
-            <div class="time-btn" onclick="selectTime(this)">14:00</div>
-            <div class="time-btn" onclick="selectTime(this)">14:30</div>
-            <div class="time-btn" onclick="selectTime(this)">15:00</div>
-            <div class="time-btn" onclick="selectTime(this)">15:30</div>
-            <div class="time-btn" onclick="selectTime(this)">16:00</div>
-            <div class="time-btn" onclick="selectTime(this)">16:30</div>
-            <div class="time-btn" onclick="selectTime(this)">17:00</div>
-            <div class="time-btn" onclick="selectTime(this)">17:30</div>
-            <div class="time-btn" onclick="selectTime(this)">18:00</div>
-            <div class="time-btn" onclick="selectTime(this)">18:30</div>
-            <div class="time-btn" onclick="selectTime(this)">19:00</div>
-            <div class="time-btn" onclick="selectTime(this)">19:30</div>
+            <div class="time-slots" id="timeSlots">
+                <div class="time-btn" onclick="selectTime(this)">10:30</div>
+                <div class="time-btn" onclick="selectTime(this)">11:00</div>
+                <div class="time-btn" onclick="selectTime(this)">11:30</div>
+                <div class="time-btn" onclick="selectTime(this)">12:00</div>
+                <div class="time-btn" onclick="selectTime(this)">12:30</div>
+                <div class="time-btn" onclick="selectTime(this)">13:00</div>
+                <div class="time-btn" onclick="selectTime(this)">13:30</div>
+                <div class="time-btn" onclick="selectTime(this)">14:00</div>
+                <div class="time-btn" onclick="selectTime(this)">14:30</div>
+                <div class="time-btn" onclick="selectTime(this)">15:00</div>
+                <div class="time-btn" onclick="selectTime(this)">15:30</div>
+                <div class="time-btn" onclick="selectTime(this)">16:00</div>
+                <div class="time-btn" onclick="selectTime(this)">16:30</div>
+                <div class="time-btn" onclick="selectTime(this)">17:00</div>
+                <div class="time-btn" onclick="selectTime(this)">17:30</div>
+                <div class="time-btn" onclick="selectTime(this)">18:00</div>
+                <div class="time-btn" onclick="selectTime(this)">18:30</div>
+                <div class="time-btn" onclick="selectTime(this)">19:00</div>
+                <div class="time-btn" onclick="selectTime(this)">19:30</div>
+            </div>
         </div>
 
-        <div class="section-title">👤 פרטים אישיים</div>
-        <input type="text" id="custName" placeholder="שם מלא" required>
-        <input type="tel" id="custPhone" placeholder="מספר טלפון" required>
+        <!-- שלב 3: פרטים אישיים (נחשף לאחר בחירת שעה) -->
+        <div id="step3" class="step-hidden">
+            <div class="section-title">3️⃣ פרטים אישיים</div>
+            <input type="text" id="custName" placeholder="שם מלא" required>
+            <input type="tel" id="custPhone" placeholder="מספר טלפון" required>
 
-        <button type="submit" class="submit-btn">קבע תור בוואטסאפ 💬</button>
+            <button type="submit" class="submit-btn">קבע תור בוואטסאפ 💬</button>
+        </div>
     </form>
 
-    <!-- גלריית תמונות עבודות (ריקה, רק למנהל) -->
+    <!-- גלריית תמונות עבודות -->
     <div class="section-title" id="galleryTitle" style="display:none;">📸 עבודות מהסטודיו</div>
     <div class="gallery-grid" id="galleryGrid"></div>
 
-    <!-- אזור ביקורות נקי -->
+    <!-- אזור ביקורות -->
     <div class="section-title">💬 ביקורות לקוחות</div>
-    <div class="reviews-container" id="reviewsContainer">
-        <!-- המקום נקי, ביקורות של לקוחות יתווספו לכאן -->
-    </div>
+    <div class="reviews-container" id="reviewsContainer"></div>
 
     <!-- טופס הוספת ביקורת -->
     <div class="add-review-box">
@@ -202,32 +217,49 @@
         <button onclick="addReview()" style="width:100%; background:#fff; color:#000; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">שלח ביקורת ⭐</button>
     </div>
 
-    <!-- כפתור העלאת תמונות למנהל בלבד -->
     <div class="admin-btn" onclick="adminUploadImage()">🔒 מנהל? לחץ להעלאת תמונה לגלריה</div>
     <input type="file" id="adminFileInput" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
 </div>
 
 <script>
-    let selectedService = "תספורת גבר";
-    let selectedPrice = "30";
-    let selectedDuration = "30";
+    let selectedService = "";
+    let selectedPrice = "";
+    let selectedDuration = "";
     let selectedTimeSlot = "";
 
     function openModal() { document.getElementById('noticeModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('noticeModal').style.display = 'none'; }
 
+    // בחירת שירות ומעבר לשלב הימים והשעות
     function selectService(el, name, price, duration) {
         document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
         el.classList.add('selected');
         selectedService = name;
         selectedPrice = price;
         selectedDuration = duration;
+
+        // חשיפת שלב 2 עם אקשן חלק
+        const step2 = document.getElementById('step2');
+        step2.classList.remove('step-hidden');
+        step2.classList.add('step-visible');
+        
+        // גלילה עדינה לשלב הבא
+        step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    // בחירת שעה ומעבר לשלב מילוי הפרטים
     function selectTime(el) {
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
         el.classList.add('selected');
         selectedTimeSlot = el.innerText;
+
+        // חשיפת שלב 3
+        const step3 = document.getElementById('step3');
+        step3.classList.remove('step-hidden');
+        step3.classList.add('step-visible');
+
+        // גלילה עדינה לשלב הפרטים
+        step3.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function onDateChange(input) {
@@ -247,7 +279,6 @@
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // הגבלה: תור אחד בלבד בשבוע
         const lastBookingTime = localStorage.getItem('lastUserBookingTimestamp');
         const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
         
@@ -273,7 +304,6 @@
         window.open(`https://wa.me/${barberPhone}?text=${message}`, '_blank');
     });
 
-    // הוספת ביקורת אמיתית על ידי לקוח
     function addReview() {
         const name = document.getElementById('reviewerName').value;
         const text = document.getElementById('reviewerText').value;
@@ -300,7 +330,6 @@
         alert('תודה רבה על הביקורת!');
     }
 
-    // העלאת תמונות רק למנהל (סיסמה: 1234)
     function adminUploadImage() {
         const pass = prompt("הכנס סיסמת מנהל להעלאת תמונות:");
         if(pass === "1234") {
