@@ -31,7 +31,7 @@
         body { background-color: var(--bg-black); color: var(--text-main); display: flex; justify-content: center; padding: 15px; padding-bottom: 120px; }
         .container { width: 100%; max-width: 450px; background: var(--card-bg); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft); position: relative; border: 1.5px solid var(--card-border); }
         
-        /* פעמון כסוף לגמרי מטאלי בוהק (ללא שמץ של זהב) */
+        /* פעמון כסוף זוהר בקטנה מטאלי נקי לחלוטין */
         .notification-bell { 
             position: absolute; 
             top: 0; 
@@ -49,7 +49,7 @@
             z-index: 10; 
             transition: 0.2s; 
             color: #000000; 
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4); 
             text-shadow: 0 1px 0 rgba(255,255,255,0.4);
         }
         .notification-bell:hover { filter: brightness(1.15); transform: scale(1.05); }
@@ -67,7 +67,7 @@
         /* בס״ד באותו גובה של הפעמון (בצד ימין) */
         .bsd { position: absolute; top: 0; right: 4px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; height: 36px; }
         
-        /* מעודכן לפי הלוגו החדש שסופק */
+        /* לוגו עם קו ישר מסביב וזוהר כסוף עדין בקטנה */
         .logo-container {
             width: 140px;
             height: 140px;
@@ -77,8 +77,8 @@
             justify-content: center;
             background: #000000;
             border-radius: 50%;
-            border: 2px solid var(--card-border);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.25), inset 0 0 8px rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -203,19 +203,19 @@
     </div>
 
     <div class="header">
-        <!-- בס״ד ופעמון כסוף מטאלי נקי לחלוטין באותו הגובה בדיוק -->
+        <!-- בס״ד ופעמון כסוף זוהר בקטנה באותו הגובה בדיוק -->
         <div class="bsd">בס״ד</div>
         <div class="notification-bell" onclick="openModal()" title="עדכונים">
             🔔
             <div class="bell-badge"></div>
         </div>
         
-        <!-- לוגו מעודכן מדויק לפי התמונה החדשה (שם לבן נקי וקו תחתון דק מחולק) -->
+        <!-- לוגו עם קו ישר מסביב ושם מדויק -->
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <text x="100" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="400" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Sean Atlan Studio</text>
-                <!-- קו תחתון מדויק לפי התמונה -->
-                <line x1="52" y1="108" x2="148" y2="108" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="24,3,24,3,24"/>
+                <!-- קו ישר מסביב / תחתון מדויק לתמונה -->
+                <line x1="52" y1="108" x2="148" y2="108" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
             </svg>
         </div>
 
@@ -296,14 +296,14 @@
         </div>
 
         <div id="step2" class="step-hidden">
-            <div class="section-title">2️⃣ בחר תאריך לתור</div>
+            <div class="section-title">בחר תאריך לתור</div>
             <input type="date" id="dateInput" required onchange="onDateChange(this)">
             <div class="error-msg" id="errorMsg">הסטודיו פתוח בימים ראשון עד חמישי בלבד. אנא בחר יום תקין.</div>
-            <div class="error-msg" id="pastDateErrorMsg">לא ניתן לבחור תאריך שכבר עבר.</div>
+            <div class="error-msg" id="pastDateErrorMsg">לא ניתן לבחור תאריך שכבר עבר או מעבר לשבוע הקרוב.</div>
         </div>
 
         <div id="step3" class="step-hidden">
-            <div class="section-title">3️⃣ בחר שעה פנויה</div>
+            <div class="section-title">בחר שעה פנויה</div>
             <div class="time-slots" id="timeSlots">
                 <div class="time-btn" onclick="selectTime(this)">10:30</div>
                 <div class="time-btn" onclick="selectTime(this)">11:00</div>
@@ -328,7 +328,7 @@
         </div>
 
         <div id="step4" class="step-hidden">
-            <div class="section-title">4️⃣ פרטים אישיים</div>
+            <div class="section-title">פרטים אישיים</div>
             <div class="name-group">
                 <input type="text" id="custFirstName" placeholder="שם פרטי" required>
                 <input type="text" id="custLastName" placeholder="שם משפחה" required>
@@ -369,14 +369,18 @@
     let selectedDuration = "";
     let selectedTimeSlot = "";
 
-    const dateInputEl = document.getElementById('dateInput');
-    const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
-    dateInputEl.setAttribute('min', todayStr);
-    
-    const maxDate = new Date();
-    maxDate.setDate(today.getDate() + 7);
-    dateInputEl.setAttribute('max', maxDate.toISOString().split('T')[0]);
+    // עדכון היומן לשבוע קדימה בלבד ועדכון דינמי בזמן אמת
+    function updateDateLimits() {
+        const dateInputEl = document.getElementById('dateInput');
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        dateInputEl.setAttribute('min', todayStr);
+        
+        const maxDate = new Date();
+        maxDate.setDate(today.getDate() + 7); // הגבלה מדויקת לשבוע קדימה
+        dateInputEl.setAttribute('max', maxDate.toISOString().split('T')[0]);
+    }
+    updateDateLimits();
 
     function checkExistingAppointment() {
         const appointmentData = localStorage.getItem('userAppointmentDetails');
@@ -420,6 +424,7 @@
         selectedPrice = price;
         selectedDuration = duration;
 
+        updateDateLimits(); // רענון טווח התאריכים בעת בחירת שירות
         const step2 = document.getElementById('step2');
         step2.classList.remove('step-hidden');
         step2.classList.add('step-visible');
@@ -433,6 +438,10 @@
         const currentDate = new Date();
         currentDate.setHours(0,0,0,0);
 
+        const maxAllowedDate = new Date();
+        maxAllowedDate.setDate(currentDate.getDate() + 7);
+        maxAllowedDate.setHours(23,59,59,999);
+
         const dateParts = input.value.split('-');
         const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
         const day = date.getDay(); 
@@ -441,7 +450,8 @@
         const pastDateErrorMsg = document.getElementById('pastDateErrorMsg');
         const step3 = document.getElementById('step3');
 
-        if (selectedDate < currentDate) {
+        // מניעת בחירת תאריכים שעברו או מעבר לשבוע הקרוב
+        if (selectedDate < currentDate || selectedDate > maxAllowedDate) {
             pastDateErrorMsg.style.display = 'block';
             errorMsg.style.display = 'none';
             step3.classList.add('step-hidden');
@@ -452,6 +462,7 @@
             pastDateErrorMsg.style.display = 'none';
         }
 
+        // ימים ראשון עד חמישי בלבד (0=ראשון, 1=שני, 2=שלישי, 3=רביעי, 4=חמישי, 5=שישי, 6=שבת)
         if (day === 5 || day === 6) {
             errorMsg.style.display = 'block';
             step3.classList.add('step-hidden');
